@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd"-->
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	   		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+
+		>
+
+
+	<bean id="qvpContext" class="com.bmn.spring.app.QvpContext"  >
+		<property name="id" value="3333"/>
+		<property name="name" value="qvp"/>
+	</bean>
+
+	<bean id="appServices" class="com.bmn.spring.AppServices" lazy-init="true" autowire="byName"/>
+
+
+	<bean id="testApp" class="com.bmn.spring.app.TestApp"></bean>
+
+	<bean id="userManager" class="com.bmn.spring.aop.UserManagerImpl"/>
+	<bean id="xmlAdvice" class="com.bmn.spring.aop.XmlAdvice"/>
+	<aop:config>
+		<aop:aspect id="aspect" ref="xmlAdvice">
+			<aop:pointcut id="pointUserM" expression="execution(* com.bmn.spring.aop.*.find*(..)))"/>
+			<aop:before method="doBefore" pointcut-ref="pointUserM"/>
+		</aop:aspect>
+
+	</aop:config>
+</beans>

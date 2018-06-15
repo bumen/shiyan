@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/jquery/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/jquery/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/jquery/demo/demo.css">
+
+<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/jquery/plugins/jquery.tabs.js"></script>
+
+<!-- seajsnode: 用来确定base路径。base路径为js的根路径 -->
+<script id = "seajsnode" type="text/javascript" src="/js/sea.js"></script>
+<script type="text/javascript" src="/js/seajs/util-lang.js"></script>
+<script type="text/javascript" src="/js/seajs/util-events.js"></script>
+<script type="text/javascript" src="/js/seajs/module.js"></script>
+<script type="text/javascript" src="/js/seajs/util-cs.js"></script>
+<script type="text/javascript" src="/js/seajs/util-deps.js"></script>
+<script type="text/javascript" src="/js/seajs/util-path.js"></script>
+<script type="text/javascript" src="/js/seajs/util-request.js"></script>
+<script type="text/javascript" src="/js/seajs/config.js"></script>
+
+<script type="text/javascript" src="/js/hello/hello.index.js" charset="utf-8"></script>
+
+<style type="text/css">
+	.mycss {
+		display:-moz-inline-box;
+		display:inline-block;
+		width:35px;
+		padding-top:3px;
+		height:20px;  
+		filter:none;
+		color:#FFF;
+	}
+	.mycss:hover{
+		background-color: #3F6CA4;
+		font-color:#FFF;
+		cursor: pointer;
+	}
+</style>
+<script language="javascript">
+
+function logout() {
+	window.location.href="logout";
+}
+
+</script>
+</head>
+<body class="easyui-layout">
+	<input type="hidden" id=explorer value='${accordions}' >
+	<div data-options="region:'north',border:false" style="height:60px;background:#244977;padding:10px">
+		<div style="text-align:center">
+			<font style="font-size:20px;color:#FC0">晓博圆</font>
+			<span  style="float:right;display:inline-block;padding-top:3px">
+				<span style="color:#FFF;" >
+					<img src="${request.contextPath}/images/man.png" style="height:18px;position:relative;top:4px;"/>
+					##${session._USER_.uin }
+				</span>
+				<span class="mycss" onclick="logout()">退出</span>
+			</span>
+		</div>
+	</div>
+
+	<div data-options="region:'west',split:true,title:'资源管理器'" style="width:200px;">
+		<div id="ac" class="easyui-accordion"  data-options="" fit="true"> </div>
+	</div>
+
+	<!-- 中间 -->
+	<div data-options="region:'center',title:'工作区'" style="">
+		<div id="job_tabs" class="easyui-tabs" fit="true">
+		</div>
+	</div>
+	
+	<div data-options="region:'south',border:false" style="overflow:hidden;height:30px;background:#E1E1E1;padding:8px;">
+		<div style="text-align:center;">
+			Copyright &copy; 2016 The xby project
+		</div>
+	</div>
+    <div id="mm" class="easyui-menu" data-options="" style="width:120px;">
+        <div data-options="name:'new'">新建</div>
+        <div data-options="name:'del'">删除</div>
+        <div class="menu-sep"></div>
+        <div data-options="name:'exit'">退出</div>
+    </div>
+    <!-- addDialog -->
+    <div id="addDialog" style="padding:10px;">
+        <form id="addDialogForm" method="post">
+            <table cellpadding="5">
+                <tr>
+                    <td>名称:</td>
+                    <td>
+                        <input class="easyui-textbox" id="form_name" data-options="" style="height:28px;width:150px;"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>URL:</td>
+                    <td>
+                        <input class="easyui-textbox" id="form_url" data-options="" style="height:28px;width:300px;"></input>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

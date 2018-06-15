@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/jquery/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/jquery/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="/jquery/demo/demo.css">
+
+<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/jquery/plugins/jquery.tabs.js"></script>
+
+<!-- seajsnode: 用来确定base路径。base路径为js的根路径 -->
+<script id = "seajsnode" type="text/javascript" src="/js/sea.js"></script>
+<script type="text/javascript" src="/js/seajs/util-lang.js"></script>
+<script type="text/javascript" src="/js/seajs/util-events.js"></script>
+<script type="text/javascript" src="/js/seajs/module.js"></script>
+<script type="text/javascript" src="/js/seajs/util-cs.js"></script>
+<script type="text/javascript" src="/js/seajs/util-deps.js"></script>
+<script type="text/javascript" src="/js/seajs/util-path.js"></script>
+<script type="text/javascript" src="/js/seajs/util-request.js"></script>
+<script type="text/javascript" src="/js/seajs/config.js"></script>
+
+<script type="text/javascript" src="/js/spring/mvc.index.js" charset="utf-8"></script>
+
+	<script>
+        $(function(){
+
+			$('#areaList').combobox({
+				url:'/face/combobox',
+				method:'get',
+				valueField:'id',
+				textField:'text',
+				panelHeight:'auto'});
+
+        });
+	</script>
+</head>
+<body>
+	<button name="ajax test request body" id="ajaxBtn" value="go">requestBody</button>
+
+    <input class="easyui-combobox" id="areaList" data-options="" style="height:25px;width:100px;"></input>
+</body>
+</html>

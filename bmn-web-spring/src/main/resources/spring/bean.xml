@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd"-->
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	   		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+
+		>
+
+
+	<!-- 使用工厂方法创建-->
+	<bean id="qvpBean" class="com.bmn.spring.domain.QvpBean" factory-method="qvpBeanFactory">
+
+	</bean>
+	<bean id="qvpBean3" class="com.bmn.spring.domain.QvpBean" factory-method="qvpBeanFactory" scope="prototype">
+		<constructor-arg index="0" value="9"/>
+		<constructor-arg index="1" value="name"/>
+	</bean>
+
+	<!-- 使用构造器创建 -->
+	<bean id="qvpBean2" class="com.bmn.spring.domain.QvpBean" scope="prototype">
+		<constructor-arg index="0" type="int" value="10"/>
+		<constructor-arg>
+			<value type="java.lang.String">hello world</value>
+		</constructor-arg>
+	</bean>
+</beans>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+		"http://www.springframework.org/dtd/spring-beans.dtd"-->
+<beans
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+		>
+
+	<bean id="faceContext" class="com.face.server.FaceContext" autowire="byName">
+
+	</bean>
+
+	<bean id="idGenerator" class="com.face.server.manager.impl.SnowflakeIdGenerator">
+		<constructor-arg index="0">
+			<value>0</value>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<value>0</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="loginApp" class="com.face.server.app.impl.LoginAppImpl">
+
+	</bean>
+
+	<bean id="explorerManager" class="com.face.server.manager.impl.XmlExplorerManager">
+		<property name="filePath" value="${explorer.file.path}"/>
+	</bean>
+
+	<bean id="authorityApp" class="com.face.server.app.impl.AuthorityAppImpl"/>
+</beans>

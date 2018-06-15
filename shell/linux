@@ -1,0 +1,26 @@
+## linux home
+### init
+ 1. init
+   + /etc/inittab
+   + /etc/rc.d/rc.sysinit
+   + /etc/rc.d/rc$runlevel.d
+ 2. /etc/rc.d/rc.local
+ 3. mingetty
+ 4. login
+ 
+### login
+ 1. /etc/proflie
+   +　/etc/proflie.d/*
+   >　每次用户登录，是全局配置
+ 3. ~/.bash_proflie
+   >　每次用户登录，是用户个人配置
+   >　配置环境变量与启动程序
+ 4. ~/.bashrc
+   >　配置别名与自定义函数
+ 5. /etc/bash
+
+### 分区
+ * 所有分区只有一个根 /, 在根下建目录然后挂载到不同的分区中
+   根中只记录映射关系
+ * 硬盘分区表只有8个字节，而每个分区无数据要点两个字节，所以只能有４个主分区      + 如果再分区，需要在4个中拿一个做为扩展分区，再使用扩展分区上建逻辑分区
+ 

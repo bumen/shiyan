@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="jettyServer" destroy-method="stop" class="com.face.server.JettyServer">
+		<property name="port" value="${jetty.server.port}" />
+		<property name="contextPath" value="${jetty.server.contextPath}" />
+		<property name="webPath" value="./face/web" />
+		<property name="servlets">
+			<map>
+				<entry key="/face/*" value-ref="dispatcherServlet" />
+			</map>
+		</property>
+		<property name="listeners">
+			<list>
+				<ref bean="parentServletListener"/>
+			</list>
+		</property>
+		<property name="filters">
+			<map>
+				<entry key="/*" value-ref="characterEncodingFilter" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="parentServletListener" class="com.face.server.ParentSpringSupport"/>
+
+	<bean id="characterEncodingFilter" class="org.springframework.web.filter.CharacterEncodingFilter">
+		<property name="encoding" value="utf-8"/>
+		<property name="forceEncoding" value="true"/>
+	</bean>
+
+	<bean id="dispatcherServlet" class="org.springframework.web.servlet.DispatcherServlet">
+		<property name="contextConfigLocation" value="classpath*:/mvc/*.xml" />
+	</bean>
+
+
+</beans>

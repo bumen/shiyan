@@ -1,0 +1,90 @@
+<explorer>
+	<!--
+			accordion: {
+				"id"		: "唯一编号",
+				"order"		: "显示顺序",
+				"title"		: "标题",
+				"selected	:"默认不否打开",
+				"content"	: "内容",
+				"type"		: default, link(自己创建外部链接)
+			}
+			branch: {
+				"id"  : 唯一
+				"text": 名称
+				"url" : 请求地址
+				"type" : 类型：default: 默认不写， btn: 按键（不显示）, invalid(不可点）
+			}
+		-->
+	<accordions><!--id规则：parentId+范围内本层id-->
+		<accordion id="1" order="1" title="文件管理" 	 selected="true">
+			<content id="accordion_1" type="tree">
+				<![CDATA[
+					<ul id=accordion_1 class=easyui-tree data-options=animate:true,lines:true></ul>
+			 	]]>
+			</content>
+
+			<children> <!--第一层id 00-99-->
+				<branch id="100" text="Spring" url="">
+					<children> <!--第二层id 000-999-->
+						<branch id="100000" text="MVC" url="" >
+							<children>
+								<branch id="10000000" text="DispatchServlet" url="spring/mvc/servlet/show" type="url" />
+							</children>
+						</branch>
+						<branch id="100101" text="分区管理" url="areaPage" >
+							<children><!--第三层id 00-99-->
+								<branch id="10010100" text="添加" url="area/add"  type="btn" />
+							</children>
+						</branch>
+						<branch id="100102" text="网关管理" url="serverPage" >
+							<children>
+								<branch id="10010200" text="添加" url="area/ipAdd" type="btn" />
+							</children>
+						</branch>
+
+						<branch id="100103" text="发送邮件" url="mailPage"/>
+
+					</children>
+				</branch>
+				<branch id="101" text="Web" url="" >
+					<children>
+						<branch id="101100" text="Servlet" url=""/>
+						<branch id="101101" text="Cookie" url="areaTestPage"/>
+					</children>
+				</branch>
+			</children>
+		</accordion>
+		<accordion id="2" order="2" title="自定义管理" selected="false" type="link">
+			<content id="accordion_2" type="tree">
+				<![CDATA[
+					<ul id=accordion_2 class=easyui-tree data-options=animate:true,lines:true></ul>
+			 	]]>
+			</content>
+			<children>
+				<branch id="200" text="收藏" url="" type="invalid"/>
+			</children>
+		</accordion>
+		<accordion id="3" order="3" title="系统管理"   selected="false">
+			<content id="accordion_3" type="tree">
+				<![CDATA[
+					<ul id=accordion_3 class=easyui-tree data-options=animate:true,lines:true></ul>
+			 	]]>
+			</content>
+			<children>
+				<branch id="300" text="管理员" url="" >
+					<children>
+						<branch id="300100" text="账号管理" url="userPage" />
+						<branch id="300101" text="角色管理" url="rolePage" >
+							<children>
+								<branch id="30010100" text="删除" url="role/del" type="btn"/>
+								<branch id="30010101" text="绑定" url="role/bind" type="btn"/>
+							</children>
+						</branch>
+						<branch id="300102" text="权限管理" url="permitPage" />
+					</children>
+				</branch>
+			</children>
+		</accordion>
+	</accordions>
+</explorer>
+
