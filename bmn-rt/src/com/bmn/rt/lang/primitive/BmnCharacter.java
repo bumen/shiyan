@@ -23,4 +23,8 @@ public class BmnCharacter {
      * 
      */
     private Character ch;
+
+    public void setCh() {
+        // Character.UnicodeScript
+    }
 }

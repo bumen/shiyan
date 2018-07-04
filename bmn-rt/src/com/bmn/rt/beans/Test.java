@@ -73,6 +73,8 @@ public class Test {
         int index = info.getDefaultPropertyIndex();
         System.out.println(index);
 
+        Statement statement;
+
     }
 
     private  void interfaces() {
