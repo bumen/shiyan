@@ -3,6 +3,9 @@
 
 ### java.io
 
+### java.security
+ * jca
+
 ### java.util.prefs
  * 
 
@@ -65,7 +68,7 @@
  * java动态编译器抽象
 
 ### javax.transaction 
- * 事物
+ * JTA 事物
  * javax.transaction.xa
    + 分布式事物
    

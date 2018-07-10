@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ExcelWriter {
 
-    private static final Logger logger = LoggerFactory.getLogger(ExcelBuilder.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExcelWriter.class);
 
     private HSSFWorkbook workbook;
 
