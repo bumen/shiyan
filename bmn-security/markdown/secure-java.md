@@ -61,8 +61,24 @@
  * PublicKey, PrivateKey
    + 是非对称密钥顶层接口
    
+ * AlgorithmParameters
+   + 非透明，算法参数
+ * AlgorithmParameterGenerator
+   + AlgorithmParameters生成器
+   + 通过初始化参数大小或指定AlgorithmParameterSpec
+   
+   
+ * 
+ 
  * KeyPair
    + 是非对称密钥的扩展，是密钥对的载体，称为密钥对。
+   
+ * KeyPairGenerator
+   + KeyPair生成器
+   + 通过初始化算法密钥大小或指定AlgorithmParameterSpec
+ * KeyFactory
+   + 通过KeySpec生成公钥，私钥
+  
    
  * Signature
    + 用来生成和验证数字签名
@@ -124,11 +140,11 @@
 ### java.security.cert
  * 提供用于解析和管理证书，证书撤销列表(CRL)和证书路径的类和接口。
  
-#### Sertificate
+#### Certificate
  * 是一个管理证书的抽象
  * 证书有多种类型：如X.509, PGP, SDSI
  
-#### CertficateFactory
+#### CertificateFactory
  * 证书工厂，可以通过它将证书导入到程序中
  * 此类定义了从相关编码中生成证书、证书路径和证书撤销列表对象的功能
 

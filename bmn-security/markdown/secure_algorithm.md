@@ -53,6 +53,7 @@
  * 是非对称加密算法与消息摘要结合体
  * 遵循：私钥签名，公钥验证
  * 具有数据完整性，认证性，抗否性
+ * 是对明文的签名验证过程。不对明文进行加密，解密
  
 ### RSA
  * 即包含加密/解密算法，同时兼有效数字签名算法
@@ -80,6 +81,13 @@
      - 常用Base64编码格式作为数字证书文件存储格式
  * 自签名证书
    + 证书申请者为自己的证书签名，内部使用
+     
+ * openssl命令
+   + `openssl genrsa -aes128 -out private/ca.key.pem 1024`
+   + `E:\ca>openssl req -new -key private/ca.key.pem -config "D:\Bumen Files\openssl-0
+      .9.8\share\openssl.cnf" -out private/ca.csr -subj "/C=CN/ST=BJ/L=BJ/O=zlex/OU=zl
+      ex/CN=*.zlex.org"`
+   + 
      
 ### 证书签发
  * 由数字证书需求方产生自己的密钥对
