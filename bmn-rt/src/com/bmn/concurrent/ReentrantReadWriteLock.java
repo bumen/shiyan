@@ -44,6 +44,8 @@ public class ReentrantReadWriteLock {
     }
 
     private boolean canGrantReadAccess(Thread callingThread) {
+        // 写锁降级到读锁
+        if(isWriter(callingThread)) return true;
         //有写锁，则不可以读
         if(writers > 0) return false;
         //没有写锁，有读锁，则不管是否有写请求。则可以重入
@@ -70,10 +72,53 @@ public class ReentrantReadWriteLock {
 
     private Thread writingThread = null;
 
-    public synchronized void lockWirte() {
+    public synchronized void lockWirte() throws InterruptedException {
         Thread callingThread = Thread.currentThread();
         writeRequest++;
 
+        while (!canGrantWriteAccess(callingThread)) {
+            wait();
+        }
 
+        writeRequest--;
+        writers++;
+        writingThread = callingThread;
+    }
+
+    public synchronized void unlockWrite() {
+        writers--;
+        if(writers == 0) {
+            writingThread = null;
+        }
+        notifyAll();
+    }
+
+    private boolean canGrantWriteAccess(Thread callingThread) {
+        //读锁升级到写锁
+        if(isOnlyReader(callingThread)) return true;
+        if(hadReaders()) return false;
+        if(writingThread == null) return true;
+        if(!isWriter(callingThread)) return false;
+        return true;
+    }
+
+    private boolean hadReaders() {
+        return !readingThreads.isEmpty();
+    }
+
+    private boolean isWriter(Thread callingThread) {
+        return writingThread == callingThread;
+    }
+
+    /**
+     *  读锁升级到写锁
+     *
+     *  拥有读锁的线程，也可以获得写锁。
+     *  要求这个线程是唯一一个拥有读锁的线程
+     * @param thread
+     * @return
+     */
+    private boolean isOnlyReader(Thread thread) {
+        return readingThreads.size() == 1 && readingThreads.get(thread) != null;
     }
 }
