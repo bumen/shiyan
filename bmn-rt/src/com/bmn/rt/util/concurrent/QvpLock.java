@@ -48,8 +48,10 @@ public class QvpLock {
         System.out.println(Unsafe.ARRAY_INT_BASE_OFFSET);
 
 
-        semaphores();
-        locks();
+       // semaphores();
+        //locks();
+
+        countDownLatch();
     }
 
 
@@ -128,5 +130,42 @@ public class QvpLock {
 
 
         CountDownLatch countDownLatch = new CountDownLatch(1);
+    }
+
+    public static void countDownLatch() {
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    countDownLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        t1.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    countDownLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+       // t2.start();
+
+        countDownLatch.countDown();
+        //countDownLatch.countDown();
+    }
+
+    public static void readWriteLock() {
+        ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     }
 }

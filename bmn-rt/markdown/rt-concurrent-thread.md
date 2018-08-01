@@ -20,6 +20,9 @@
    + 加锁顺序
    + 加锁时限
    + 死锁检测
+   + 使用非阻塞算法
+   
+   
  * 避免饥饿
    + 使用公平锁
    
@@ -80,3 +83,20 @@
  
 #### 函数式并行模型
  * forkandjoin
+ 
+### ThreadLocal
+ * 一个ThreadLocal对象代表一个线程本地变量
+ * 存储在Thread对象属性ThreadLocalMap中
+ * ThreadLocalMap中以ThreadLocal对象的弱引用做为key
+#### 内存泄漏
+ * 栈中的强引用为Thread, 与ThreadLocal
+ * 如果栈中存在Thread强引用，但不存在ThreadLocal强引用，则gc会回收ThreadLocalMap中弱引用key
+ * 此时key为null, 但是value还存在强引用。由于key取不到，而value一真存在，所以出现泄漏。
+ 
+#### 解决内存泄漏
+ * 再次调用get或set方法是会删除key为null的entry
+ * 使用完变量，主动remove删除
+ * jdk建议使用private static定义ThreadLocal对象，让ThreadLocal对象生命周期变长，
+ * 由于一真存在ThreadLocal强引用所以key不为null 
+ 
+   
