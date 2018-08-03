@@ -1,8 +1,15 @@
 package com.bmn.rt.net;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.*;
 import java.util.Enumeration;
 import java.util.List;
+import javax.net.ServerSocketFactory;
+import javax.net.SocketFactory;
+import javax.sound.midi.Soundbank;
 
 /**
  * Created by Administrator on 2017/9/18.
@@ -145,6 +152,14 @@ public class Test {
         URLDecoder urlDecoder;
         URLEncoder urlEncoder;
 
+        OutputStream out = new ByteArrayOutputStream();
 
+        System.out.println();
+
+    }
+
+    public void xnet() {
+        ServerSocketFactory serverSocketFactory;
+        SocketFactory socketFactory;
     }
 }

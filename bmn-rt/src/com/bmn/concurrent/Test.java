@@ -9,5 +9,5 @@ public class Test {
 
     ConcurrentMap concurrentMap;
 
-    ThreadLocal
+    ThreadLocal ck;
 }
