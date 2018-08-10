@@ -104,6 +104,8 @@ public class BmnPrimitive {
     public static void main(String[] args) {
         eq();
 
+        int i = 0;
+        System.out.println((i=4)*++i);
     }
 
 }

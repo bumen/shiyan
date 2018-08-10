@@ -4,6 +4,7 @@ import bean.TicketBean;
 import com.bmn.util.JsonUtils;
 import com.bmn.util.RandomStringUtils;
 import com.digest.SHACoder;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -14,13 +15,15 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.xml.stream.events.Characters;
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 public class Test {
 
     public static void main(String[] args)
         throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException,
-        InvalidKeyException, InvalidKeySpecException, InvalidAlgorithmParameterException {
+        InvalidKeyException, InvalidKeySpecException, InvalidAlgorithmParameterException, DecoderException,
+        UnsupportedEncodingException {
         desCoder();
 
         aesCoder();
@@ -34,15 +37,15 @@ public class Test {
 
     private static void testSha128withAesTicket()
         throws NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException,
-        InvalidKeySpecException, InvalidKeyException {
+        InvalidKeySpecException, InvalidKeyException, DecoderException, UnsupportedEncodingException {
         String ticket = RandomStringUtils.randomAlphanumeric(30);
 
         System.out.println("ticket : " + ticket);
 
-        byte[] data = ticket.getBytes();
+        byte[] data = ticket.getBytes("utf-8");
 
         byte[] digest = SHACoder.encodeSHA256(data);
-        String v = Hex.encodeHexString(digest);
+        //String v = Hex.encodeHexString(digest);
 
         byte[] key = AESCoder.initKey();
 
@@ -51,8 +54,9 @@ public class Test {
         byte[] encrypt = AESCoder.encrypt(data, key);
 
         TicketBean bean = new TicketBean();
+        String v = Hex.encodeHexString(digest);
         bean.setSha256(v);
-        bean.setTicket(Base64.getEncoder().encodeToString(encrypt));
+        bean.setTicket(Hex.encodeHexString(encrypt));
 
         String m = JsonUtils.toJson(bean);
 
@@ -67,8 +71,7 @@ public class Test {
         System.out.println("加密消息：\n" + ss);
 
         TicketBean bean2 = JsonUtils.fromJson(ss, TicketBean.class);
-        String base64Ticket2 = bean2.getTicket();
-        byte[] encrypt2 = Base64.getDecoder().decode(base64Ticket2.getBytes());
+        byte[] encrypt2 = Hex.decodeHex(bean2.getTicket().toCharArray());
 
         byte[] key2 = Base64.getDecoder().decode(aesKey.getBytes());
         byte[] data2 = AESCoder.decrypt(encrypt2, key2);
@@ -115,6 +118,9 @@ public class Test {
         String base64Key = encoder.encodeToString(key);
         System.out.println(base64Key);
 
+        String hexAesKey = Hex.encodeHexString(key);
+        System.out.println("hexAesKey = " + hexAesKey);
+
         byte[] key2 = Base64.getDecoder().decode(base64Key);
 
         System.out.println(Arrays.equals(key, key2));
@@ -123,9 +129,17 @@ public class Test {
 
         System.out.println(encoder.encodeToString(encrypt));
 
-        byte[] decrypt = AESCoder.decrypt(encrypt, key);
+        try {
+            byte[] key3 = Hex.decodeHex(hexAesKey.toCharArray());
 
-        System.out.println(new String(decrypt));
+            byte[] decrypt = AESCoder.decrypt(encrypt, key3);
+
+            System.out.println(new String(decrypt));
+        } catch (DecoderException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

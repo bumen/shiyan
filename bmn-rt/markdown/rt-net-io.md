@@ -156,3 +156,139 @@
    + 寻址到本地接口地址的包不能发送出最初的网络接口，即使是相同节点的不同网络接口也不行。
    + 主要用于网络调试和测试。
    + 本地接口组播地址以两个字节FF01或FF11开头，取决组播地址是永久分配地址，还是临时地址。
+   
+### NetworkInterface
+ * 用来表示一个本地IP地址。
+ * 表示物理硬件或虚拟地址
+ 
+### URL
+ * 判断url支持的Protocal
+ * 创建相对url通过new URL(URL url, String relative);
+ * 指定一个URLStreamHandler, 协议处理器
+ 
+#### 分解URL
+ * 结构
+   + 模式，java中叫协议
+   + 授权机构
+   + 路径
+   + 片段
+   + 查询字符串
+ * 授权机构
+   + 用户信息
+   + 主机
+   + 端口
+ * getFile()
+   + java不将URL分为单独的路径和文件部分。
+   + 从主机名后的第一个斜线一直到开始片段标识符的#号之前的字符，都被认为是文件的部分。
+ * getPath()
+   + 与getFile()基本相同，只是不包括查询字符串
+ * getUserInfo()
+   + 位于模式后，主机前面，@符号将它们分隔开
+#### 从URL获取数据
+ * openStream()
+   + 执行客户端与服务器端必要的握手，返回一个可以读取数据的InputStream。
+   + 从这个InputStream获得的数据是URL所指向文件的原始内容
+   + 它不包括任何Http首部或任何与协议有关的信息
+ * openConnection()
+   + 通过URLConnection可以让你访问服务器发送的所有数据
+   + 包括原始数据与此协议指定的所有元数据
+   + 还可以写回数据
+ * openConnection(Proxy proxy)
+   + 这个会覆盖通过设置的socksProxyHost, socksProxyPort, http.proxyHost, http.proxyPort, http.nonProxyHosts
+   + 和类似系统属性进行设置的任何代理服务器
+   + 如果协议处理器不支持代理，此参数将被忽略，如果可能的话就直接进行连接。
+ * getContent
+   + 获取URL指向的数据，尝试将其转换为某种对象
+   + 如果：文本转为InputStream, 图片转为ImageProducer
+   + 它是通过从服务器获取数据的MIME首部中的Content-type获取，如果没有Content-type或不认识的则返回InputStream
+ * getContent(Class[] class) 
+   + 判断是否为指定的class对象
+ 
+#### 工具方法
+ * sameFile(URL other)
+   + 判断两个url是否指向相同的文件
+ * URLEncoder, URLDecoder
+   + 对URL进行编码
+   
+### URI
+ * 表示资源定义，不依赖于底层协议处理器。
+ * 编码
+   + 可以是ASCII, 也可以是Unicode
+ * 有模式的URI是绝对URI, 没有模式的URI是相对URI, 
+ * isOpaque()
+   + 当为层次URI时，返回false
+   + 当为非层次URI时，返回true
+   + 如果URI不透明，所能得到的是模式，模式特有部分，片段标识符。
+   + 如果URI是层次，那还能获取层次信息。如：getHost, getPath()
+ 
+ * 解析相对URI
+   
+### 代理
+ * 系统属性
+   + 设置系统属性，指出本地代理服务器的地址
+   + 可以通过启动参数，或System.setProperty()
+   + http.proxyHost, http.proxyPort, http.nonProxyHosts(不被代理的主机，可以使用通配符，多个用“|”分隔)
+   + ftp.proxyHost, ftp.proxyPort, ftp.nonProxyHosts
+   + socksProxyHost, socksProxyPort
+#### Proxy 类
+ * 三种代理
+   + Http
+   + Socket
+   + 直接连接（没有代理）
+   
+### Socket
+ * isClosed()
+   + 当打开的socket关闭后，返回true
+   + 否则返回false, 如果没有进行连接的socket也返回false
+ * isConnected()
+   + 表示socket是否曾经连接过远程主机
+ * 服务类型
+   + 低成本
+   + 高可靠性
+   + 最高吞吐量
+   + 最小延迟
+   + 通过setTrafficClass
+   
+
+### UDP
+ * java中UDP实现分为两个类：DatagramPacket和DatagramScoket
+ * DatagramPacket
+   + 将数据字节填充到称为数据报的UDP包中，让你来解包接收的数据报。
+ * DatagramSocket
+   + 可以收发UDP数据报
+   
+   
+### RMI
+ * java.rmi
+   + 定义了客户端所见的类、接口和异常，当编写要访问远程对象但本身不是远程对象的程序时使用。
+ * java.rmi.server
+   + 定义了服务器端可见的类、接口和异常，当编写被客户端调用的远程对象时使用。
+ * java.rmi.registry
+   + 定义了用于查找和命名远程对象的类、接口、异常
+ 
+#### 服务器端
+ * 远程对象可以高性能计算机运行，为低性能客户端计算结果
+ * 创建远程对象，
+   + 首先要定义一个扩展了java.rmi.Remote接口的接口
+   + 子接口每个方法都必须声明抛出RemoteException
+ * 定义远程类
+   + 实现UnicastRemoteObject或通过UnicastRemoteObject.exportObject()
+ * 通过Naming bind
+   
+#### 编译stub
+ * stub作为本地对象与运行于服务器的远程对象之间的中间人
+ * 服务器的各个远程对象都以客户端上的stub类表示
+ * 对象通过继承实现UnicastRemoteObject的类，可以通过rmic自动生成stub
+ * 通过UnicastRemoteObject.exportObject(), 需要手动生成stub
+ * 启动注册表服务器
+   + 实际上是两个服务器，一个是远程对象本身，一个是允许本地客户端下载远程对象引用的注册表
+   + 通过rmiregistry port &
+   + 然后启动 java xxxServer(由rmic生成的)
+   
+#### 客户端
+ * 通过Naming.lookup("rmi://host:port/name")
+ * name是注册的远程对象名
+ * 运行客户端
+   + jdk1.5前需要由rmic生成stub类，放到客户端路径下。1dk1.5之后不需要这个类了。
+   + 需要实现了Remote接口的子接口
+ * 在运行时加载类
