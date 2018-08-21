@@ -35,6 +35,7 @@ public class BmnPrimitive {
         int i1 = 3, i2 = 3;
         float f1 = (float) ((i1 + i2) * 0.2);
 
+
     }
 
     public void stringObj() {
@@ -51,19 +52,19 @@ public class BmnPrimitive {
     /**
      * 运算符优先级
      * <p>
-     * 1. <code> ++ -- </code>
+     * 1. <code> ++ -- </code>, int
      * <p>
-     * 2. 算术
+     * 2. 算术, int, long, float, double
      * <p>
-     * 3. 位移
+     * 3. 位移, 只有int long
      * <p>
-     * 4. 关系
+     * 4. 关系,
      * 
      * <pre>
      *   它的操作返回值是boolean 类型，所以一般与逻辑运算符一起使用
      * </pre>
      * <p>
-     * 5. 位
+     * 5. 位, int, long
      * 
      * <pre>
      *   如果使用位移操作符，则一般使用括号来提高运算优先级

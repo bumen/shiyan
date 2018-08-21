@@ -8,5 +8,28 @@
     <artifactId>bmn-ai</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+    <parent>
+        <groupId>com.bmn</groupId>
+        <artifactId>bmn-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+
+    </parent>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.bmn</groupId>
+            <artifactId>bmn-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cognitivej</groupId>
+            <artifactId>cognitivej</artifactId>
+            <version>0.6.2</version>
+        </dependency>
+
+    </dependencies>
     
 </project>

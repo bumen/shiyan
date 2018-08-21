@@ -110,6 +110,7 @@ public class Test {
     private static void aesCoder()
         throws NoSuchAlgorithmException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
         String str = "AES";
+
         byte[] input = str.getBytes();
 
         byte[] key = AESCoder.initKey();

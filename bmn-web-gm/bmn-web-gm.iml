@@ -22,6 +22,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.50" level="application_server_libraries" />
     <orderEntry type="module" module-name="bmn-core" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi-ooxml:3.17" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.17" level="project" />
@@ -75,6 +76,5 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-servlet:9.4.11.v20180605" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.4.11.v20180605" level="project" />
     <orderEntry type="library" name="Maven: com.google.zxing:core:3.3.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.50" level="application_server_libraries" />
   </component>
 </module>
