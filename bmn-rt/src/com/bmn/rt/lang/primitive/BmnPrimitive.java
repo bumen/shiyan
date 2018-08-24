@@ -6,13 +6,19 @@
 package com.bmn.rt.lang.primitive;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * 
  *
  * @date 2018-04-08
  * @author 562655151@qq.com
  */
-public class BmnPrimitive {
+public  class BmnPrimitive {
+
+
 
     public void exchange() {
         byte b = 0x31;
@@ -38,7 +44,7 @@ public class BmnPrimitive {
 
     }
 
-    public void stringObj() {
+    public void stringObj(boolean n) {
         String a = "atrue";
         String b = "a" + "true";
         System.out.println((a == b)); // result = true
@@ -47,6 +53,14 @@ public class BmnPrimitive {
         String bb = "b";
         String b1 = "a" + bb; // 因为bb是变量所以在编译期间不能确定
         System.out.println((a1 == b1)); // result = false
+
+
+        int k;
+
+        n = n && ((k=4) >5);
+
+
+        // System.out.println(k);
     }
 
     /**
@@ -107,6 +121,65 @@ public class BmnPrimitive {
 
         int i = 0;
         System.out.println((i=4)*++i);
+
+        //charEscapeSequence();
+
+        ext(2, 3);
+
+        calc();
     }
+
+
+    /**
+     * 转义字符序列
+     */
+    public static void charEscapeSequence() {
+        System.out.println("start escape sequence");
+        //String s = "\u0027";
+        //System.out.println(s);
+
+        //char c = '\u0027';
+        //System.out.println(c);
+    }
+
+    public static  void ext(int a, int b ) {
+        System.out.println(a + "s" + b);
+
+        a = a ^ b;
+        b = a ^ b;
+        a = a ^ b;
+
+        System.out.println(a + "s" + b);
+    }
+
+    public static void calc() {
+
+        System.out.println(Float.POSITIVE_INFINITY);
+        System.out.println(Double.POSITIVE_INFINITY);
+
+        int i = 1000000;
+        System.out.println(i * i);
+
+        long l = i;
+        System.out.println(l * l);
+
+        System.out.println((20296L/ (l -i)));
+
+        byte b = 1;
+
+        char c = (char) b;
+
+        short s = b;
+
+        c = (char) s;
+
+        s = (short) c;
+
+        Cloneable cc = new int[3];
+
+        Serializable sc = new Object[1];
+    }
+
+
 
 }
