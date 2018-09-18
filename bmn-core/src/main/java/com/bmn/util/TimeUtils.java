@@ -3,7 +3,7 @@
 * Copyright (c) 2018 bumen.All rights reserved.
 */
 
-package cn.itimi.tv.util;
+package com.bmn.util;
 
 import java.time.Instant;
 import java.time.LocalDate;
