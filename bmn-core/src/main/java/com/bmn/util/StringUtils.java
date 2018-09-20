@@ -65,4 +65,47 @@ public abstract class StringUtils {
         return d == 0;
     }
 
+    /**
+     * Trim <i>all</i> whitespace from the given String:
+     * leading, trailing, and in between characters.
+     * @param str the String to check
+     * @return the trimmed String
+     * @see java.lang.Character#isWhitespace
+     */
+    public static String trimAllWhitespace(String str) {
+        if (!hasLength(str)) {
+            return str;
+        }
+        StringBuilder sb = new StringBuilder(str);
+        int index = 0;
+        while (sb.length() > index) {
+            if (Character.isWhitespace(sb.charAt(index))) {
+                sb.deleteCharAt(index);
+            }
+            else {
+                index++;
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Count the occurrences of the substring in string s.
+     * @param str string to search in. Return 0 if this is null.
+     * @param sub string to search for. Return 0 if this is null.
+     */
+    public static int countOccurrencesOf(String str, String sub) {
+        if (str == null || sub == null || str.length() == 0 || sub.length() == 0) {
+            return 0;
+        }
+        int count = 0;
+        int pos = 0;
+        int idx;
+        while ((idx = str.indexOf(sub, pos)) != -1) {
+            ++count;
+            pos = idx + sub.length();
+        }
+        return count;
+    }
+
 }

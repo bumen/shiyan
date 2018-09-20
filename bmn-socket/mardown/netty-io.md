@@ -270,6 +270,20 @@
  ，没有可能会导致线程被阻塞的磁盘操作，数据库操作，网络操作等，可以直接在NIO线程上完成业务逻辑。
  * 如果业务逻辑处理复杂，不要在NIO线程上完成，建议将解码后的POJO消息封装Task,派发到业务线程池处理
  ，以保证NIO线程尽快被释放，处理其它I/O操作。
+ 
+#### Future
+ * Netty中的ChannelFuture与异步I/O相关
+##### ChannelFuture
+ * 两种状态：uncompleted, completed
+   + 当开始一个I/O操作时，一个新的ChannelFuture被创建，此时它处于uncompleted状态
+   + uncompleted: 非失败，非成功，非取消
+   + I/O操作完成
+   + completed: 操作失败，操作成功，操作取消
+ * Netty强烈推荐直接通过添加监听器的方式获取I/O操作结果，或者进行后续的相关操作。
+   + 推荐通过GenericFutureListener代替ChannelFuture的get等方法的原因是:
+   + 当我们进行异步I/O操作时，完成的时间是无法预测的，如果不设置超时时间，它会导致调用线程长时间被阻塞，甚至挂死。
+   + 如果设置超时间，时间又无法精确预测。利用异步通信机制回调GenericFutureListener是最佳解决方案，它的性能最优。
    
+ 
    
    

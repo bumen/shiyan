@@ -4,11 +4,13 @@ public class User {
     private String name;
     private int age;
     private int credits;
+    private int image = 2;
 
-    public User(String name, int age, int credits) {
+    public User(String name, int age, int credits, int image) {
         this.name = name;
         this.age = age;
         this.credits = credits;
+        this.image = image;
     }
 
     public String getName() {
@@ -35,8 +37,16 @@ public class User {
         this.credits = credits;
     }
 
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return name + "-" + age + "-" + credits;
+        return name + "-" + age + "-" + credits + "-" + image;
     }
 }
