@@ -1,4 +1,4 @@
-package com.ourpalm.tank.app.map.astar;
+package com.bmn.core.astar;
 
 public class LineFunction {
 	private final Point point1;

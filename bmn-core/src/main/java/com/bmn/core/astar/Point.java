@@ -1,4 +1,4 @@
-package  com.ourpalm.tank.app.map.astar;
+package com.bmn.core.astar;
 
 /**
  * Created by g on 2016/6/7.

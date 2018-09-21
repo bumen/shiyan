@@ -1,4 +1,4 @@
-package com.ourpalm.tank.app.map.astar;
+package com.bmn.core.astar;
 
 import com.google.common.collect.ImmutableRangeMap;
 import com.google.common.collect.Range;

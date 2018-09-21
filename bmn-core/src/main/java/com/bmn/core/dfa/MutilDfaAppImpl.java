@@ -11,12 +11,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.slf4j.Logger;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StringUtils;
 
-import com.ourpalm.core.log.LogCore;
-import com.ourpalm.core.util.Util;
-import com.ourpalm.tank.domain.CharNode;
 
 public class MutilDfaAppImpl implements MutilDfaApp{
 

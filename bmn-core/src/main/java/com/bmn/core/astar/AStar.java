@@ -1,4 +1,4 @@
-package com.ourpalm.tank.app.map.astar;
+package com.bmn.core.astar;
 
 import java.util.Comparator;
 import java.util.List;
