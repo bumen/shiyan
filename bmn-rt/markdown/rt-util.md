@@ -45,5 +45,5 @@
  * 是线程安全容器，
  * key, value都不能为null
  * new Hashtable(), 时直接创建数组，不是在添加元素时才创建
- * new Hashtable(), 默认容量是11， 初始负载因子是0.75f
+ * new Hashtable(), 默认容量是11， 初始负载因 子是0.75f 
    
