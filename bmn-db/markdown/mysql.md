@@ -1,6 +1,13 @@
 ## mysql数据库
 
 ### 数据库原理
+#### 字段类型
+ * tinyint 1Byte
+ * smallint 2Byte
+ * mediumint 3Byte
+ * int 4Byte
+ * bigint 8Byte
+ 
 
 #### MyISAM与Innodb区别
  * 使用count(*)
@@ -26,10 +33,71 @@
       - select+ insert的业务应用MyISAM，因为在文件尾部顺序增加记录速度很快
       - 但一般是混合读写，只要数据量大和并发量大一律使用Innodb
    + Innodb支持行锁 
+ * 索引结构不同
+   + MyISAM：索引与数据分开存储
+   + Innodb：主键索引与数据存储在一块
  
 ### 数据库设计
 
 ### 数据库调优
+#### SQL优化
+ * 索引相关
+   + 负向条件查询不能使用索引：!=, <>, not in, not, !>, !<
+   + 前导模糊查询不能使用索引
+        - where desc like "%xxx"
+        - where desc like "xxx%", 可以索引
+   + 数据区分度不大的字段不宜使用索引
+        - 每次过滤的数据很少
+        - 经验，通过滤80%数据时就可以使用索引
+   + 禁止在where 条件的属性上进行计算，使用函数或表达式。不能命中索引
+        - where avg(age) > 50
+   + 如果业务大部分是单条查询，使用hash索引性能更好
+        - B+tree索引时间复杂度是O(lg(n))
+        - Hash索引的时间复杂度是O(1)
+   + 单索引字段数不允许超过5过，多了起不到有效过滤作用
+   + 禁止在更新频繁字段建立索引
+        - 更新会变量B+tree
+   + 建立复合索引，把区分度高的字段放在前面
+        
+ * Null列，查询有潜在大坑
+   + 单列索引不存null值，复合索引不存全为null的值，如果列为null可能查不到数据
+   + 把字段设置not null, 并提供默认值
+   + null类型字段，mysql内部需要进行特殊处理，增加处理记录复杂性
+   + null值需要更多存储空间
+   
+ * 复合索引最左前缀，并不是值SQL语句的where顺序要和复合索引一致
+   + （name, pwd) 建复合索引
+   + where name=? and pwd = ?与where pwd=? and name=?都可以命中索引
+   + where name=? 满足复合索引最左前缀，也能命中
+   + where pwd =? 不能命中索引
+ * 使用ENUM而不是字符串
+ * 如果明确知道只有一条结果返回，limit 1 能够提高效率
+   + 通过明确告诉数据库，让它主动停止游标移动
+ * 把计算放到业务层而不是数据库层，除了节省数据cpu，还可以使用查询缓存
+   + 多次调用相同sql，可以使用查询缓存
+ * 强制类型转换会全表扫描
+ * union all肯定是能命中索引
+   + select * from o where s = 0 union all select * from o where s = 1
+   + 直接告诉mysql怎么做，cpu耗时最少
+   + union all 代替union, union会有去重开销
+ * 简单的in能够命中索引
+   + select * from o where s in(0,1)
+   + 让mysql思考，查询优化耗费cpu比union all多，但可以忽略不计
+ * 对于or, 新版的Mysql能命中索引
+   + 让Mysql思考，查询优化耗费cpu比in多，
+   + 不建议程序频繁用or
+ * 尽量不使用Join
+ * 打散批量更新
+ 
+#### 数据库调优
+ * 使用性能分析工具
+   + show profile
+   + mysqlsla
+   + mysqldumpslow
+   + explain
+   + show slow log
+   + show processlist
+   + show query_response_time(percona)
 
 ### 主从数据库一致性
 #### 为什么会出现不一致
