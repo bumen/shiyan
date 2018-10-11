@@ -1,6 +1,10 @@
 ## mysql数据库
 
 ### 数据库原理
+ * sql 子查询
+   + 相关子查询：放在select后，外部select每扫描一行，子查询就执行一次。效率低
+   + 非相关子查询：放在select后，子查询执行一次
+   
 
 #### MyISAM与Innodb区别
  * 使用count(*)
