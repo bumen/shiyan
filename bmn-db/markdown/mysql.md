@@ -1,6 +1,7 @@
 ## mysql数据库
 
 ### 数据库原理
+<<<<<<< HEAD
 #### 字段类型
  * tinyint 1Byte
  * smallint 2Byte
@@ -8,6 +9,12 @@
  * int 4Byte
  * bigint 8Byte
  
+=======
+ * sql 子查询
+   + 相关子查询：放在select后，外部select每扫描一行，子查询就执行一次。效率低
+   + 非相关子查询：放在select后，子查询执行一次
+   
+>>>>>>> bed71101b938486d5e462aaa674cd8cc87ee6755
 
 #### MyISAM与Innodb区别
  * 使用count(*)
