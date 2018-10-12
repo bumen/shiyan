@@ -3,6 +3,7 @@ package com.bmn.rt.lang;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ThreadPoolExecutor;
 import javax.sound.midi.Soundbank;
 
 public class BmnUnicode {
@@ -22,6 +23,11 @@ public class BmnUnicode {
         int c = Character.charCount(smpCodePoint);
         System.out.println(c);
 
+        ThreadPoolExecutor x= null;
+
+        StringBuilder sb = new StringBuilder("      ");
+        sb.append(1);
+
 
         char high = Character.highSurrogate(smpCodePoint);
         char low = Character.lowSurrogate(smpCodePoint);
@@ -39,6 +45,18 @@ public class BmnUnicode {
         CharsetEncoder encoder = charset.newEncoder();
 
         // encoder.encode();
+
+        System.out.println(stringSize(11));
+    }
+
+    public   static int stringSize(long x) {
+        long p = 10;
+        for (int i=1; i<19; i++) {
+            if (x < p)
+                return i;
+            p = 10*p;
+        }
+        return 19;
     }
 
 }

@@ -90,7 +90,7 @@
  * ThreadLocalMap中以ThreadLocal对象的弱引用做为key
 #### 内存泄漏
  * 栈中的强引用为Thread, 与ThreadLocal
- * 如果栈中存在Thread强引用，但不存在ThreadLocal强引用，则gc会回收ThreadLocalMap中弱引用key
+ * 如果栈中存在Thread强引用，但存在ThreadLocal强引用，则gc会回收ThreadLocalMap中弱引用key
  * 此时key为null, 但是value还存在强引用。由于key取不到，而value一真存在，所以出现泄漏。
  
 #### 解决内存泄漏
