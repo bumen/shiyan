@@ -18,6 +18,8 @@ public class QvpListBeanFactory {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         reader.loadBeanDefinitions(res);
 
+        factory.getBean("");
+
         return factory;
     }
 }
