@@ -1,5 +1,11 @@
 ## java泛型
 
+### 类型
+ * TypeVariable 泛型变量 E
+ * GenericArrayType 泛型数组 E[]
+ * ParameterizedType 参数化类型 <E>
+ * WildcardType 通配符类型
+
 ### 定义
  * ObjectHolder<T> 是泛型类型，<T>为形式类型参数
  * 泛型类型：在一个类型中使用了形式类型参数，称为该类型为泛型类型

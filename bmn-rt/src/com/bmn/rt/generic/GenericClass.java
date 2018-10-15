@@ -9,6 +9,7 @@ import com.bmn.rt.generic.bean.BBean;
 import com.bmn.rt.generic.pti.APti;
 import com.bmn.rt.generic.pti.APtiAbstract;
 import com.bmn.rt.generic.pti.CommonPti;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
@@ -92,7 +93,7 @@ public class GenericClass {
     /**
      * 泛型上界, 只能取，不能放
      * 上界是相对于引用来说的：如list = aBeans, list = bBeans. CommonPti是ABean, BBean的上界
-     * 引用传递只能是越传越大，即子类引用向父类引用传递。保证取出的数据不会出错
+     * 引用传递只能是越传越大，即子类引用指向父类引用传递。保证取出的数据不会出错
      * 为什么不能放
      * 1. list = aBeans时，此时引用为List<? extends CommonPti> 类型， 如果放BBean(), 则出错；
      * 为什么可以取, 上界相对于 ? extends T 和来说
@@ -110,6 +111,8 @@ public class GenericClass {
 
         list = aBeans;
         list = bBeans;
+
+        Class<?>[] ss = new Class<?>[3];
 
         ABean aBean = aBeans.get(0);
         BBean bBean = bBeans.get(0);
@@ -144,6 +147,7 @@ public class GenericClass {
         List<? super CommonPti> list = null;
         List<? super ABean> aBeans = null;
         List<? super BBean> bBeans = null;
+
 
         list.add(new ABean());
         list.add(new BBean());
