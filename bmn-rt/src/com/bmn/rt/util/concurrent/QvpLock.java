@@ -61,6 +61,8 @@ public class QvpLock {
 
         final Condition condition = lock.newCondition();
 
+        new ReentrantReadWriteLock();
+
 
         new Thread(new Runnable() {
             @Override

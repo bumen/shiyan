@@ -22,6 +22,7 @@ public class Test {
         Delayed delayed;
         Executor executor;
         ExecutorService executorService;
+        Executors.newCachedThreadPool();
         ForkJoinPool forkJoinPool;
         Future future;
         RejectedExecutionHandler rejectedExecutionHandler;
