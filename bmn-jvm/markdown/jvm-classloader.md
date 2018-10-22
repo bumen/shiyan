@@ -48,3 +48,19 @@
   * SPI加载
   * OSGI加载
   * ClassLoader类的链接
+  
+### Thread.currentThread.getContextClassLoader()
+  * 线程上下文加载器
+  * 通过setContextClassLoader指定一个类加载器
+  * 默认context加载器是appclassloader由Launch设置
+  * rt.jar也是由appclassloader加载
+  * 问题
+    + 对时spi接口，一般由appclassloader加载
+    + 而spi的实现，可能由不同的自定义类加载器加载
+    + 因此接口 != 接口实现。不是相同的类加载器
+  * 为了解决上述问题
+    + 通过contextclassloader实现用指定的类型加载器接口实现 
+  
+### jvm判断两个类是否相等
+ * 通过类名+类加载器
+ 
