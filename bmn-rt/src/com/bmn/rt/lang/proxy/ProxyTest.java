@@ -30,7 +30,7 @@ public class ProxyTest {
         File file = new File(".");
 
         try {
-            FileOutputStream ost = new FileOutputStream(file.getCanonicalPath() + "\\target\\classes\\com\\qvp\\proxy\\realDataProxy.class");
+            FileOutputStream ost = new FileOutputStream(file.getCanonicalPath() + "\\bmn-rt\\target\\classes\\com\\qvp\\proxy\\realDataProxy.class");
             ost.write(data);
             ost.flush();
             ost.close();
