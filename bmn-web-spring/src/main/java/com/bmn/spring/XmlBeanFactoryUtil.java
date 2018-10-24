@@ -19,6 +19,8 @@ public class XmlBeanFactoryUtil {
         reader.loadBeanDefinitions(res);
 
         org.springframework.web.util.Log4jConfigListener listener;
+
+        factory.getBean("");
         return factory;
     }
 }
