@@ -1,5 +1,8 @@
 package com.bmn.rt.lang.thread;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicLongArray;
 
@@ -19,6 +22,8 @@ public class ThreadTest {
             }
         });
 
+        Thread.currentThread().getContextClassLoader();
+
 
         try {
             t.join();
@@ -26,8 +31,13 @@ public class ThreadTest {
             e.printStackTrace();
         }
 
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+
         AtomicLong atomicLong;
         AtomicLongArray atomicLongArray;
+
+        ThreadLocal threadLocal ;
     }
 
 }
