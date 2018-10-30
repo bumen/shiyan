@@ -1,5 +1,6 @@
 package com.bmn.rt.lang.thread;
 
+import java.util.HashMap;
 import java.util.concurrent.*;
 
 /**
@@ -39,6 +40,8 @@ public class CollectionTest {
         ConcurrentLinkedQueue<Integer> linkedQueue = new ConcurrentLinkedQueue<>();
 
 
+        HashMap<String, String> vo = null;
+        vo.put("a", "");
 
     }
 }

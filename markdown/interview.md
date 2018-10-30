@@ -53,3 +53,20 @@
  * a & (x|y) = (a&x) | (a&y)
  * a | (x&y) = (a|x) & (a|y)
  
+####
+ * rpc调用慢怎么排查
+ * jvm故障排查
+ * 熟悉的消息队列
+ * zk原理
+ * redis使用
+ * 服务器压力
+ * sql 查询主要考查having, explain, 子查询
+ * 集合框架结构
+ * hashMap， put实现
+ * concurrentHashmap， 实现
+ * 比较一个字符串是否是另个的子串
+ * 打印abc, 所有情况
+ * 如果实现高并发
+ * 分布式id
+ * 如果实现秒杀
+ * mysql锁，索引实现，组合索引实现
