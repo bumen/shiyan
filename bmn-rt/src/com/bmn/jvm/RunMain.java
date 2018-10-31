@@ -1,5 +1,8 @@
 package com.bmn.jvm;
 
+import java.lang.reflect.Field;
+import java.util.concurrent.Executors;
+
 public class RunMain {
 
     public static void main(String[] args) {
@@ -16,8 +19,10 @@ public class RunMain {
 
         Thread t2 = new Thread(script);
 
-        t1.start();
-        t2.start();
+        //t2.start();
+
+       //
+
     }
 
 }
