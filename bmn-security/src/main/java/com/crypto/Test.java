@@ -144,11 +144,11 @@ public class Test {
     }
 
 
-    public static  void pbeCoder()
+    public static void pbeCoder()
         throws NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException,
         BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException {
         String str = "PBE";
-        System.out.println("原文: "  + str);
+        System.out.println("原文: " + str);
 
         byte[] data = str.getBytes();
 
