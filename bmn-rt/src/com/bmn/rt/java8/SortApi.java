@@ -2,14 +2,12 @@ package com.bmn.rt.java8;
 
 import com.bmn.rt.beans.User;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.stream.Stream;
 
-public class Sort {
+public class SortApi {
 
     private Spliterator<Object> spliterator;
     private Stream<Object> stream;
@@ -26,14 +24,18 @@ public class Sort {
         users.add(new User("jessica", 15, 13, 1));
 
 
-
     }
 
     /**
      * 多条件
      */
-    private static  Comparator<User> c = Comparator.comparing(User::getAge).thenComparing(User::getCredits,  (x,y)->{return x == y ? 0 : x > y ? 1: -1;})
-        .thenComparing(User::getImage, (x,y)->{return x == y ? 0 : x > y ? 1: -1;});
+    private static Comparator<User> c = Comparator.comparing(User::getAge)
+        .thenComparing(User::getCredits, (x, y) -> {
+            return x == y ? 0 : x > y ? 1 : -1;
+        })
+        .thenComparing(User::getImage, (x, y) -> {
+            return x == y ? 0 : x > y ? 1 : -1;
+        });
 
     public static void sort() {
         users.sort(c);
@@ -42,8 +44,8 @@ public class Sort {
     }
 
     public static void main(String[] args) {
-        Sort.init();
-        Sort.sort();
+        SortApi.init();
+        SortApi.sort();
 
         System.out.println(users);
     }

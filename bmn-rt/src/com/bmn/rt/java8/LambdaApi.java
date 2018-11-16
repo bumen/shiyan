@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-public class Lambda {
+public class LambdaApi {
 
 
     private Consumer<Object> consumer;
