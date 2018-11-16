@@ -4,6 +4,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import org.apache.commons.codec.binary.Hex;
 import sun.misc.BASE64Encoder;
 
 public class Test {
@@ -17,16 +18,22 @@ public class Test {
 
         // System.out.println();
 
-        byte[] data3 = MACCoder.encodeHmacSHA512(str.getBytes(), key);
+        byte[] hkey = MACCoder.initHmacSHAKey();
+        key = "QuGt3xGeRapq86cd98joQYCN3EXAxPEE".getBytes();
+        str = "nonce=Y8z0OWw3dw&payload={\"keywords\":[\"习近平重要讲话\",\"R201809131708\",\"111\"]}&timestamp=1542266727";
+        str = "nonce=Y8z0OWKDNdwnyyZ&payload={“keywods”:[\"a\", \"b\", \"c\"], “value”:”xxx”}&timestamp=1542124800";
+
+
+        byte[] data3 = MACCoder.encodeHmacSHA(str.getBytes(), key);
         byte[] data4 = MACCoder.encodeHmacSHA512(str.getBytes(), key);
 
         System.out.println(Arrays.equals(data3, data4));
 
-        String string1 = "appsecret=dMWOUasdkjasiDKF3lsdfaouDWej5&nonce=Y8z0OWKDNdwnyyZ&timestamp=1542124800";
+        String string1 = "nonce=Y8z0OWw3dw&payload={\"keywords\":[\"习近平重要讲话\",\"R201809131708\",\"111\"]}&timestamp=1542266727";
 
         byte[] data = SHACoder.encodeSHA(string1.getBytes());
 
-        String s = Base64.getEncoder().encodeToString(data);
+        String s = Base64.getEncoder().encodeToString(data3);
         System.out.println(s);
     }
 
