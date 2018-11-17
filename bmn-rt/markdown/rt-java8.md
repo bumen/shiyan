@@ -3,7 +3,21 @@
 ### 新特性使用
 
 #### lambada
-
+ * 方法引用
+   + 是lambada的简便写法
+   + 如：list.sort(Integer::compareTo)
+ * 函数式接口
+   + 只有一个抽象方法的接口称为函数式接口，可以使用@FunctionalInterface 注解标注
+   + java8允许以lambada表达式方式为函数式接口提供实现
+   + Funcation<T, R> 定义了apply方法，接收一个T类型对象，返回R类型结果
+ * 语法格式
+   + () -> xx            //无参数，有一个语句，有返回xx
+   + p1 -> xx            //只有一个参数，有一个语句，有返回xx
+   + (int p1, int p2) -> xx //有带类型参数，有返回xx
+   + (p1, p2) -> xx     //有参数，有返回xx
+   + () -> {xx}         //无参数，返回xx
+   + () -> sysout.print //无参数，返回void
+   + () -> {return xx;} //无参数，有返回
 #### defulat 接口
 
 #### Optional<T>
@@ -14,7 +28,48 @@
 
 #### Files- 是java7的特性
  * https://www.ibm.com/developerworks/cn/java/j-nio2-2/index.html
-
+ 
+#### Stream Api
+ * 参考：https://lw900925.github.io/java/java8-stream-api.html
+ * 数据流处理：可以实现类似关系型数据库的查询操作
+   + 过滤
+   + 排序
+   + 分组
+   + 聚合
+ * 流与集合区别
+   + 集合是一种数据结构，用于存放数据。通过for-each方式遍历集合，是一种外部迭代
+   + 流关关注如何处理数据。遍历数据时，流是一种内部迭代
+   
+ * 流遍历
+   + 流只能遍历一次，遍历结束后，这个流就会被关闭掉。
+   如果要重新遍历，可以从数据源（集合）中重新获取一个流。
+   如果你对一个流遍历两次，就会抛出java.lang.IllegalStateException异常
+   
+ * 流构成：三部分
+   1. 数据源：通过xx.stream()
+   2. 中间处理: 如果过滤，映射，排序
+   3. 终端处理：终端处理会生成结果，可以生成非流结果，也可以直接打印输出。
+ * 创建流
+   + 通过静态方法**Stream.of()**  
+   `Stream<Stream> stream = Stream.of("a", "b", "c")`
+   + 通过静态方法**Stream.empty()**创建空流
+   + 通过数据创建
+     ``` 
+        String str = {"a", "b", "c"};
+        Stream<Stream> stream = Arrays.stream(str);
+     ```
+   + 通过文件生成流
+   + 通过函数创建：Stream.iterate, Stream.generate
+ * 中间处理
+   + reduce: 归约，将流中元素进行合并。如求和，最大值，最小值
+   一般与map一起使用
+   + map: 重新映射结果返回stream
+   + flatMap, 重新映射结果，接收一个数组流，再把这个数组流转为一个原始流
+ * 终端处理
+   + 终端处理之后，流不会关闭
+   
+ * 并行流
+   + 
 
 ### java.io
 

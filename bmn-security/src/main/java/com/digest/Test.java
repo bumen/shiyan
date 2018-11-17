@@ -1,5 +1,7 @@
 package com.digest;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -9,7 +11,8 @@ import sun.misc.BASE64Encoder;
 
 public class Test {
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException {
+    public static void main(String[] args)
+        throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
         String str = "HmacMD5消息摘要";
 
         byte[] key = MACCoder.initHmacMD5Key();
@@ -19,9 +22,8 @@ public class Test {
         // System.out.println();
 
         byte[] hkey = MACCoder.initHmacSHAKey();
-        key = "QuGt3xGeRapq86cd98joQYCN3EXAxPEE".getBytes();
+        key = "MRp8LeXoQZr+iCNSeB6RAn84HxdVVJEIWOH4m6vVB5c=".getBytes();
         str = "nonce=Y8z0OWw3dw&payload={\"keywords\":[\"习近平重要讲话\",\"R201809131708\",\"111\"]}&timestamp=1542266727";
-        str = "nonce=Y8z0OWKDNdwnyyZ&payload={“keywods”:[\"a\", \"b\", \"c\"], “value”:”xxx”}&timestamp=1542124800";
 
 
         byte[] data3 = MACCoder.encodeHmacSHA(str.getBytes(), key);
@@ -35,6 +37,11 @@ public class Test {
 
         String s = Base64.getEncoder().encodeToString(data3);
         System.out.println(s);
+
+        String uri = "W/R7vWyufVxrIoutZj8C/CMjzVL4=";
+        System.out.println(URLEncoder.encode(uri, "utf-8"));
+
+        System.out.println(uri.startsWith("/"));
     }
 
 }

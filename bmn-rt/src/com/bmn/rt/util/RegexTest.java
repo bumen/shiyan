@@ -26,5 +26,10 @@ public class RegexTest {
         Matcher m = p.matcher("123aa");
         t = m.lookingAt();
         System.out.println(t);
+
+        Character character;
+
+        String string="测试<>《》！*(^)$%~!@#$…&%￥—+=、。，；‘’“”：·`  \r\n  文本";
+        System.out.println(string.replaceAll("\\pP|\\pS|\\s", ""));
     }
 }
