@@ -9,6 +9,10 @@ import com.bmn.rt.generic.bean.BBean;
 import com.bmn.rt.generic.pti.APti;
 import com.bmn.rt.generic.pti.APtiAbstract;
 import com.bmn.rt.generic.pti.CommonPti;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -36,7 +40,44 @@ public class GenericClass {
 
 
     public static void main(String[] args) {
-        GenericClass.test(new TestMC());
+        TypeVariable<Class<BawGen>>[] typs =  BawGen.class.getTypeParameters();
+        for(TypeVariable<?> t : typs) {
+            System.out.println(t.getName());
+        }
+
+        Type types = BawChildNi.class.getGenericSuperclass();
+        if(types instanceof TypeVariable) {
+            System.out.println("type v");
+        }
+
+        if(types instanceof  Class<?>) {
+            Class<?> clz = (Class<?>)types;
+            clz.getTypeParameters();
+        }
+
+        System.out.println(types.getTypeName());
+        if(types instanceof ParameterizedType) {
+            ParameterizedType pt = (ParameterizedType) types;
+            Type[] dd = pt.getActualTypeArguments();
+            for(Type x : dd) {
+                if(x instanceof TypeVariable) {
+                    System.out.println("haha");
+                }
+
+                if(x instanceof ParameterizedType) {
+                    System.out.println("gogo");
+                }
+
+                if(x instanceof Class) {
+                    System.out.println("cccc");
+                }
+                System.out.println(x.getTypeName());
+            }
+            System.out.println(pt.getRawType());
+        }
+
+
+        //GenericClass.test(new TestMC());
     }
 
 

@@ -7,11 +7,17 @@
     + Retention
     + Target 
  
-### 注解的位置
+### AnnotatedElement 代表注解的元素
   * AnnotatedElement
     + 实现它的接口的地方，可以声明注解
+    + 类，方法，方法参数，构造器，字段，E(范型变量)，注解上
    
   * AnnotatedElement 可以获取该位置上的所有注解
+  
+### Annotation 注解接口
+ * 是所有通过 @interface定义的注解的父类
+ * 通过annotationType方法获取 @interface注解类型
+   + 因为annotationType返回一个Class<?>类型对象，所以通过getAnnotation可以返回定义的元注解
   
 
 ### @Inherited

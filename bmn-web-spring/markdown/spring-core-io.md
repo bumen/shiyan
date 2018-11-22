@@ -47,3 +47,7 @@
  
 ### ResourceUtils
  * 资源工具类
+ 
+### /META-INFO/spring.factories文件加载 
+ * SpringFactoriesLoader
+

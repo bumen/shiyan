@@ -1,17 +1,34 @@
 package com.bmn.spring.core;
 
+import org.springframework.core.OrderComparator;
+import org.springframework.core.Ordered;
 import org.springframework.core.SpringProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Test {
 
     public static void main(String[] args) {
-
+        orderTest();
     }
+
+    private static void orderTest() {
+        List<Ordered> list = new ArrayList<>();
+        list.add(new OrderOne());
+        list.add(new OrderTwo());
+        list.add(new PriorityOrderOne());
+
+        OrderComparator.sort(list);
+
+        System.out.println(list);
+    }
+
+
 
     private static final String PROPERTIES_RESOURCE_LOCATION = "spring.properties";
 

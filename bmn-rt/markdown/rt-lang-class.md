@@ -20,6 +20,7 @@
 ### getTypeParameters
  * 类，只能定义泛型变量 TypeVariable
  * 返回类定义的所有TypeVariable
+ * 声明一个class时，如果带范型，则只能是参数化类型。不能带具体参数类型
  
 ### getSuperclass
  * 如果是class ， 则返回所有extends class父类, 最高Object
@@ -28,7 +29,8 @@
 ### getGenericSuperclass
  * 返回可以带泛型的类型 Type
  * 如果是泛型，则返回ParameterizedType
-   + 同时，这个泛型参数有确定的类型， 而不是T
+   + 参数可以是具体参数类型 如果 extends Super<String>, 则返回Super<String>
+   + 也可以是参数化类型 如果 extends Super<T>, 则返回Super<T>
  * 如果不是泛型，则返回Class<T>
  
 ### getInterfaces
@@ -37,5 +39,6 @@
  * 如果是primitive, void 返回 length 0 array
  
 ### getGenericInterfaces
- * 返回可以带泛型的类型 Type
+ * 会返回所有实现的接口
+ * 只是如果接口带泛型，则可以获取泛型信息
  * 与getGenericSuperClass 返回一样

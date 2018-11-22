@@ -55,10 +55,12 @@ import static org.springframework.beans.factory.xml.BeanDefinitionParserDelegate
 import static org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.VALUE_ATTRIBUTE;
 
 import com.bmn.spring.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.BeanMetadataAttribute;
 import org.springframework.beans.BeanMetadataAttributeAccessor;
 import org.springframework.beans.PropertyValue;
@@ -82,6 +84,7 @@ import org.springframework.util.PatternMatchUtils;
  * 构建 BeanDefinition
  */
 public class QvpBeanDefinitionBuilder {
+
     public static final String HAS_NOT = "hasn't";
 
     private final DocumentDefaultsDefinition defaults = new DocumentDefaultsDefinition();
@@ -93,15 +96,16 @@ public class QvpBeanDefinitionBuilder {
         QvpBeanDefinitionBuilder builder = new QvpBeanDefinitionBuilder();
         BeanElement beanElement = builder.buildBeanElement();
         builder.initDefaults();
-        AbstractBeanDefinition beanDefinition = builder.parseBeanDefinition(beanElement, "qvpContext");
+        AbstractBeanDefinition beanDefinition = builder
+            .parseBeanDefinition(beanElement, "qvpContext");
 
     }
 
     /**
-     * <bean id="qvpContext" class="com.qvp.app.QvpContext"></bean>
-     * 模拟xml配置的bean element
+     * <bean id="qvpContext" class="com.qvp.app.QvpContext"></bean> 模拟xml配置的bean element
      */
     public static class BeanElement {
+
         private Map<String, String> attrs = new HashMap<>();  //bean 上的属性，用户配置的
 
         private List<BeanElement> children = new ArrayList<>();    //bean 下的子元素
@@ -127,7 +131,7 @@ public class QvpBeanDefinitionBuilder {
         }
 
         public String getAttribute(String key) {
-            if(hasAttribute(key)) {
+            if (hasAttribute(key)) {
                 return attrs.get(key);
             }
             //默认
@@ -161,33 +165,33 @@ public class QvpBeanDefinitionBuilder {
             return this.elementName.equals(elementName);
         }
     }
+
     static {
         //全局bean 属性 <beans>
-        defaultsAttributes.put(DEFAULT_LAZY_INIT_ATTRIBUTE,             FALSE_VALUE);
-        defaultsAttributes.put(DEFAULT_MERGE_ATTRIBUTE,                 FALSE_VALUE);
-        defaultsAttributes.put(DEFAULT_AUTOWIRE_ATTRIBUTE,              AUTOWIRE_NO_VALUE);
-        defaultsAttributes.put(DEFAULT_DEPENDENCY_CHECK_ATTRIBUTE,      "none");
-        defaultsAttributes.put(DEFAULT_AUTOWIRE_CANDIDATES_ATTRIBUTE,   HAS_NOT);
-        defaultsAttributes.put(DEFAULT_INIT_METHOD_ATTRIBUTE,           HAS_NOT);
-        defaultsAttributes.put(DEFAULT_DESTROY_METHOD_ATTRIBUTE,        HAS_NOT);
-
+        defaultsAttributes.put(DEFAULT_LAZY_INIT_ATTRIBUTE, FALSE_VALUE);
+        defaultsAttributes.put(DEFAULT_MERGE_ATTRIBUTE, FALSE_VALUE);
+        defaultsAttributes.put(DEFAULT_AUTOWIRE_ATTRIBUTE, AUTOWIRE_NO_VALUE);
+        defaultsAttributes.put(DEFAULT_DEPENDENCY_CHECK_ATTRIBUTE, "none");
+        defaultsAttributes.put(DEFAULT_AUTOWIRE_CANDIDATES_ATTRIBUTE, HAS_NOT);
+        defaultsAttributes.put(DEFAULT_INIT_METHOD_ATTRIBUTE, HAS_NOT);
+        defaultsAttributes.put(DEFAULT_DESTROY_METHOD_ATTRIBUTE, HAS_NOT);
 
         //bean所有属性的默认值
-        beanAttributes.put(CLASS_ATTRIBUTE,                 "");
-        beanAttributes.put(PARENT_ATTRIBUTE,                HAS_NOT);
-        beanAttributes.put(SCOPE_ATTRIBUTE,                 HAS_NOT);
-        beanAttributes.put(SINGLETON_ATTRIBUTE,             HAS_NOT);
-        beanAttributes.put(ABSTRACT_ATTRIBUTE,              HAS_NOT);
-        beanAttributes.put(LAZY_INIT_ATTRIBUTE,             DEFAULT_VALUE);
-        beanAttributes.put(AUTOWIRE_ATTRIBUTE,              DEFAULT_VALUE);
-        beanAttributes.put(DEPENDENCY_CHECK_ATTRIBUTE,      DEFAULT_VALUE);
-        beanAttributes.put(DEPENDS_ON_ATTRIBUTE,            HAS_NOT);
-        beanAttributes.put(AUTOWIRE_CANDIDATE_ATTRIBUTE,    "");
-        beanAttributes.put(PRIMARY_ATTRIBUTE,               HAS_NOT);
-        beanAttributes.put(INIT_METHOD_ATTRIBUTE,           HAS_NOT);
-        beanAttributes.put(DESTROY_METHOD_ATTRIBUTE,        HAS_NOT);
-        beanAttributes.put(FACTORY_METHOD_ATTRIBUTE,        HAS_NOT);
-        beanAttributes.put(FACTORY_BEAN_ATTRIBUTE,          HAS_NOT);
+        beanAttributes.put(CLASS_ATTRIBUTE, "");
+        beanAttributes.put(PARENT_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(SCOPE_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(SINGLETON_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(ABSTRACT_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(LAZY_INIT_ATTRIBUTE, DEFAULT_VALUE);
+        beanAttributes.put(AUTOWIRE_ATTRIBUTE, DEFAULT_VALUE);
+        beanAttributes.put(DEPENDENCY_CHECK_ATTRIBUTE, DEFAULT_VALUE);
+        beanAttributes.put(DEPENDS_ON_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(AUTOWIRE_CANDIDATE_ATTRIBUTE, "");
+        beanAttributes.put(PRIMARY_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(INIT_METHOD_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(DESTROY_METHOD_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(FACTORY_METHOD_ATTRIBUTE, HAS_NOT);
+        beanAttributes.put(FACTORY_BEAN_ATTRIBUTE, HAS_NOT);
 
     }
 
@@ -197,32 +201,36 @@ public class QvpBeanDefinitionBuilder {
         beanElement.attr(CLASS_ATTRIBUTE, "com.qvp.app.QvpContext");
 
         //加入子元素
-        beanElement.addElement(BeanElement.build(META_ELEMENT).attr(KEY_ATTRIBUTE, "a").attr(VALUE_ATTRIBUTE, "b"));
-        beanElement.addElement(BeanElement.build(LOOKUP_METHOD_ELEMENT).attr(NAME_ATTRIBUTE, "haha").attr(BEAN_ELEMENT, "beanRef"));
         beanElement.addElement(
-                BeanElement.build(REPLACED_METHOD_ELEMENT)
-                        .attr(NAME_ATTRIBUTE, "haha")
-                        .attr(REPLACER_ATTRIBUTE, "replaced")
-                        .addElement(
-                                BeanElement.build(ARG_TYPE_ELEMENT, null)
-                                        .attr(ARG_TYPE_MATCH_ATTRIBUTE, "matchs")
-                        )
+            BeanElement.build(META_ELEMENT).attr(KEY_ATTRIBUTE, "a").attr(VALUE_ATTRIBUTE, "b"));
+        beanElement.addElement(BeanElement.build(LOOKUP_METHOD_ELEMENT).attr(NAME_ATTRIBUTE, "haha")
+            .attr(BEAN_ELEMENT, "beanRef"));
+        beanElement.addElement(
+            BeanElement.build(REPLACED_METHOD_ELEMENT)
+                .attr(NAME_ATTRIBUTE, "haha")
+                .attr(REPLACER_ATTRIBUTE, "replaced")
+                .addElement(
+                    BeanElement.build(ARG_TYPE_ELEMENT, null)
+                        .attr(ARG_TYPE_MATCH_ATTRIBUTE, "matchs")
+                )
         );
         beanElement.addElement(
-                BeanElement.build(CONSTRUCTOR_ARG_ELEMENT)
-                        .attr(INDEX_ATTRIBUTE, "0")
+            BeanElement.build(CONSTRUCTOR_ARG_ELEMENT)
+                .attr(INDEX_ATTRIBUTE, "0")
                 .attr(TYPE_ATTRIBUTE, "int")
                 .attr(NAME_ATTRIBUTE, HAS_NOT)
                 .attr(REF_ATTRIBUTE, HAS_NOT)
                 .attr(VALUE_ATTRIBUTE, "1000"));
         beanElement.addElement(BeanElement.build(PROPERTY_ELEMENT)
-                .attr(NAME_ATTRIBUTE, "id")
-                .attr(REF_ATTRIBUTE, HAS_NOT)
-                .attr(VALUE_ATTRIBUTE, "1000-100"));
+            .attr(NAME_ATTRIBUTE, "id")
+            .attr(REF_ATTRIBUTE, HAS_NOT)
+            .attr(VALUE_ATTRIBUTE, "1000-100"));
         beanElement.addElement(
-                BeanElement.build(QUALIFIER_ELEMENT).attr(TYPE_ATTRIBUTE, "typeName").attr(VALUE_ATTRIBUTE, HAS_NOT)
+            BeanElement.build(QUALIFIER_ELEMENT).attr(TYPE_ATTRIBUTE, "typeName")
+                .attr(VALUE_ATTRIBUTE, HAS_NOT)
                 .addElement(
-                        BeanElement.build(QUALIFIER_ATTRIBUTE_ELEMENT).attr(KEY_ATTRIBUTE, "key").attr(VALUE_ATTRIBUTE, "value")
+                    BeanElement.build(QUALIFIER_ATTRIBUTE_ELEMENT).attr(KEY_ATTRIBUTE, "key")
+                        .attr(VALUE_ATTRIBUTE, "value")
                 )
         );
 
@@ -230,7 +238,7 @@ public class QvpBeanDefinitionBuilder {
     }
 
     public void initDefaults() {
-       //parse root element <beans lazy-init=true>
+        //parse root element <beans lazy-init=true>
         String lazyInit = getDefaultAttribute(DEFAULT_LAZY_INIT_ATTRIBUTE);
         if (DEFAULT_VALUE.equals(lazyInit)) {
             lazyInit = "false";
@@ -251,15 +259,16 @@ public class QvpBeanDefinitionBuilder {
 
         defaults.setDependencyCheck(getDefaultAttribute(DEFAULT_DEPENDENCY_CHECK_ATTRIBUTE));
 
-        if(hasDefaultAttribute(DEFAULT_AUTOWIRE_CANDIDATES_ATTRIBUTE)) {
-            defaults.setAutowireCandidates(getDefaultAttribute(DEFAULT_AUTOWIRE_CANDIDATES_ATTRIBUTE));
+        if (hasDefaultAttribute(DEFAULT_AUTOWIRE_CANDIDATES_ATTRIBUTE)) {
+            defaults
+                .setAutowireCandidates(getDefaultAttribute(DEFAULT_AUTOWIRE_CANDIDATES_ATTRIBUTE));
         }
 
-        if(hasDefaultAttribute(DEFAULT_INIT_METHOD_ATTRIBUTE)) {
+        if (hasDefaultAttribute(DEFAULT_INIT_METHOD_ATTRIBUTE)) {
             defaults.setAutowireCandidates(getDefaultAttribute(DEFAULT_INIT_METHOD_ATTRIBUTE));
         }
 
-        if(hasDefaultAttribute(DEFAULT_DESTROY_METHOD_ATTRIBUTE)) {
+        if (hasDefaultAttribute(DEFAULT_DESTROY_METHOD_ATTRIBUTE)) {
             defaults.setAutowireCandidates(getDefaultAttribute(DEFAULT_DESTROY_METHOD_ATTRIBUTE));
         }
 
@@ -302,7 +311,8 @@ public class QvpBeanDefinitionBuilder {
     private void parseMeta(BeanElement ele, BeanMetadataAttributeAccessor attributeAccessor) {
         for (BeanElement eleAttr : ele.elements()) {
             if (eleAttr.match(META_ELEMENT)) {
-                BeanMetadataAttribute attribute = new BeanMetadataAttribute(eleAttr.getAttribute(KEY_ATTRIBUTE), eleAttr.getAttribute(VALUE_ATTRIBUTE));
+                BeanMetadataAttribute attribute = new BeanMetadataAttribute(
+                    eleAttr.getAttribute(KEY_ATTRIBUTE), eleAttr.getAttribute(VALUE_ATTRIBUTE));
                 attribute.setSource("meta element");
                 attributeAccessor.addMetadataAttribute(attribute);
             }
@@ -312,7 +322,8 @@ public class QvpBeanDefinitionBuilder {
     private void parseLookupMethod(BeanElement ele, MethodOverrides overrides) {
         for (BeanElement eleAttr : ele.elements()) {
             if (eleAttr.match(LOOKUP_METHOD_ELEMENT)) {
-                LookupOverride override = new LookupOverride(eleAttr.getAttribute(NAME_ATTRIBUTE), eleAttr.getAttribute(BEAN_ELEMENT));
+                LookupOverride override = new LookupOverride(eleAttr.getAttribute(NAME_ATTRIBUTE),
+                    eleAttr.getAttribute(BEAN_ELEMENT));
                 override.setSource("lookup method");
                 overrides.addOverride(override);
             }
@@ -322,7 +333,8 @@ public class QvpBeanDefinitionBuilder {
     private void parseReplaceMethod(BeanElement ele, MethodOverrides overrides) {
         for (BeanElement eleAttr : ele.elements()) {
             if (eleAttr.match(REPLACED_METHOD_ELEMENT)) {
-                ReplaceOverride replaceOverride = new ReplaceOverride(eleAttr.getAttribute(NAME_ATTRIBUTE), eleAttr.getAttribute(REPLACER_ATTRIBUTE));
+                ReplaceOverride replaceOverride = new ReplaceOverride(
+                    eleAttr.getAttribute(NAME_ATTRIBUTE), eleAttr.getAttribute(REPLACER_ATTRIBUTE));
 
                 for (BeanElement attr : eleAttr.elements()) {
                     if (attr.match(ARG_TYPE_ELEMENT)) {
@@ -347,14 +359,15 @@ public class QvpBeanDefinitionBuilder {
                 String typeAttr = eleAttr.getAttribute(TYPE_ATTRIBUTE);
                 String nameAttr = eleAttr.getAttribute(NAME_ATTRIBUTE);
 
-                if(!StringUtils.isEmpty(indexAttr)) {
+                if (!StringUtils.isEmpty(indexAttr)) {
                     int index = Integer.parseInt(indexAttr);
-                    if(index < 0) {
+                    if (index < 0) {
                         throw new IllegalArgumentException();
                     }
 
                     Object object = parsePropertyValue(eleAttr, bd, null);
-                    ConstructorArgumentValues.ValueHolder valueHolder = new ConstructorArgumentValues.ValueHolder(object);
+                    ConstructorArgumentValues.ValueHolder valueHolder = new ConstructorArgumentValues.ValueHolder(
+                        object);
                     if (!StringUtils.isEmpty(typeAttr)) {
                         valueHolder.setType(typeAttr);
                     }
@@ -366,11 +379,13 @@ public class QvpBeanDefinitionBuilder {
                     if (bd.getConstructorArgumentValues().hasIndexedArgumentValue(index)) {
                         throw new IllegalArgumentException();
                     } else {
-                        bd.getConstructorArgumentValues().addIndexedArgumentValue(index, valueHolder);
+                        bd.getConstructorArgumentValues()
+                            .addIndexedArgumentValue(index, valueHolder);
                     }
                 } else {
                     Object object = parsePropertyValue(eleAttr, bd, null);
-                    ConstructorArgumentValues.ValueHolder valueHolder = new ConstructorArgumentValues.ValueHolder(object);
+                    ConstructorArgumentValues.ValueHolder valueHolder = new ConstructorArgumentValues.ValueHolder(
+                        object);
                     if (!StringUtils.isEmpty(typeAttr)) {
                         valueHolder.setType(typeAttr);
                     }
@@ -407,7 +422,7 @@ public class QvpBeanDefinitionBuilder {
 
     private void parseQualifier(BeanElement ele, AbstractBeanDefinition bd) {
         for (BeanElement eleAttr : ele.elements()) {
-            if(eleAttr.match(QUALIFIER_ELEMENT)) {
+            if (eleAttr.match(QUALIFIER_ELEMENT)) {
                 String typeName = eleAttr.getAttribute(TYPE_ATTRIBUTE);
                 if (StringUtils.isEmpty(typeName)) {
                     throw new IllegalArgumentException();
@@ -420,15 +435,16 @@ public class QvpBeanDefinitionBuilder {
                 }
 
                 for (BeanElement attr : eleAttr.elements()) {
-                    if(attr.match(QUALIFIER_ATTRIBUTE_ELEMENT)) {
+                    if (attr.match(QUALIFIER_ATTRIBUTE_ELEMENT)) {
                         String attributeName = attr.getAttribute(KEY_ATTRIBUTE);
                         String attributeValue = attr.getAttribute(VALUE_ATTRIBUTE);
-                        if (!StringUtils.isEmpty(attributeName) && !StringUtils.isEmpty(attributeValue) ) {
-                            BeanMetadataAttribute attribute = new BeanMetadataAttribute(attributeName, attributeValue);
+                        if (!StringUtils.isEmpty(attributeName) && !StringUtils
+                            .isEmpty(attributeValue)) {
+                            BeanMetadataAttribute attribute = new BeanMetadataAttribute(
+                                attributeName, attributeValue);
                             attribute.setSource("qualifier meta");
                             qualifier.addMetadataAttribute(attribute);
-                        }
-                        else {
+                        } else {
                             throw new IllegalArgumentException();
                         }
                     }
@@ -440,7 +456,6 @@ public class QvpBeanDefinitionBuilder {
 
     private Object parsePropertyValue(BeanElement ele, BeanDefinition bd, String propertyName) {
 
-
         boolean hasRefAttribute = ele.hasAttribute(REF_ATTRIBUTE);
         boolean hasValueAttribute = ele.hasAttribute(VALUE_ATTRIBUTE);
         /**
@@ -448,11 +463,11 @@ public class QvpBeanDefinitionBuilder {
          * 2. 不能同时有 subElement 与 ref 或 value
          */
         if ((hasRefAttribute && hasValueAttribute) ||
-                ((hasValueAttribute || hasValueAttribute) && !ele.elements().isEmpty())) {
+            ((hasValueAttribute || hasValueAttribute) && !ele.elements().isEmpty())) {
             throw new IllegalArgumentException();
         }
 
-        if(hasRefAttribute) {
+        if (hasRefAttribute) {
             RuntimeBeanReference bRef = new RuntimeBeanReference(ele.getAttribute(REF_ATTRIBUTE));
             bRef.setSource("constructor argument ref");
             return bRef;
@@ -466,7 +481,8 @@ public class QvpBeanDefinitionBuilder {
         }
     }
 
-    private void parseBeanDefinitionAttributes(BeanElement ele, String beanName, AbstractBeanDefinition bd) {
+    private void parseBeanDefinitionAttributes(BeanElement ele, String beanName,
+        AbstractBeanDefinition bd) {
 
         if (ele.hasAttribute(SCOPE_ATTRIBUTE)) {
             // Spring 2.x "scope" attribute
@@ -474,11 +490,10 @@ public class QvpBeanDefinitionBuilder {
             if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) {
                 //error("Specify either 'scope' or 'singleton', not both", ele);
             }
-        }
-        else if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) {
+        } else if (ele.hasAttribute(SINGLETON_ATTRIBUTE)) {
             // Spring 1.x "singleton" attribute
             bd.setScope(TRUE_VALUE.equals(ele.getAttribute(SINGLETON_ATTRIBUTE)) ?
-                    BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
+                BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
         }
 
         if (ele.hasAttribute(ABSTRACT_ATTRIBUTE)) {
@@ -499,7 +514,8 @@ public class QvpBeanDefinitionBuilder {
 
         if (ele.hasAttribute(DEPENDS_ON_ATTRIBUTE)) {
             String dependsOn = ele.getAttribute(DEPENDS_ON_ATTRIBUTE);
-            bd.setDependsOn(StringUtils.tokenizeToStringArray(dependsOn, MULTI_VALUE_ATTRIBUTE_DELIMITERS));
+            bd.setDependsOn(
+                StringUtils.tokenizeToStringArray(dependsOn, MULTI_VALUE_ATTRIBUTE_DELIMITERS));
         }
 
         String autowireCandidate = ele.getAttribute(AUTOWIRE_CANDIDATE_ATTRIBUTE);
@@ -509,8 +525,7 @@ public class QvpBeanDefinitionBuilder {
                 String[] patterns = StringUtils.commaDelimitedListToStringArray(candidatePattern);
                 bd.setAutowireCandidate(PatternMatchUtils.simpleMatch(patterns, beanName));
             }
-        }
-        else {
+        } else {
             bd.setAutowireCandidate(TRUE_VALUE.equals(autowireCandidate));
         }
 
@@ -523,8 +538,7 @@ public class QvpBeanDefinitionBuilder {
             if (!"".equals(initMethodName)) {
                 bd.setInitMethodName(initMethodName);
             }
-        }
-        else {
+        } else {
             if (this.defaults.getInitMethod() != null) {
                 bd.setInitMethodName(this.defaults.getInitMethod());
                 bd.setEnforceInitMethod(false);
@@ -536,8 +550,7 @@ public class QvpBeanDefinitionBuilder {
             if (!"".equals(destroyMethodName)) {
                 bd.setDestroyMethodName(destroyMethodName);
             }
-        }
-        else {
+        } else {
             if (this.defaults.getDestroyMethod() != null) {
                 bd.setDestroyMethodName(this.defaults.getDestroyMethod());
                 bd.setEnforceDestroyMethod(false);
@@ -553,15 +566,15 @@ public class QvpBeanDefinitionBuilder {
     }
 
     public static AbstractBeanDefinition createBeanDefinition(
-            String parentName, String className, ClassLoader classLoader) throws ClassNotFoundException {
+        String parentName, String className, ClassLoader classLoader)
+        throws ClassNotFoundException {
 
         GenericBeanDefinition bd = new GenericBeanDefinition();
         bd.setParentName(parentName);
         if (className != null) {
             if (classLoader != null) {
                 bd.setBeanClass(ClassUtils.forName(className, classLoader));
-            }
-            else {
+            } else {
                 bd.setBeanClassName(className);
             }
         }
@@ -576,14 +589,11 @@ public class QvpBeanDefinitionBuilder {
         int autowire = AbstractBeanDefinition.AUTOWIRE_NO;
         if (AUTOWIRE_BY_NAME_VALUE.equals(att)) {
             autowire = AbstractBeanDefinition.AUTOWIRE_BY_NAME;
-        }
-        else if (AUTOWIRE_BY_TYPE_VALUE.equals(att)) {
+        } else if (AUTOWIRE_BY_TYPE_VALUE.equals(att)) {
             autowire = AbstractBeanDefinition.AUTOWIRE_BY_TYPE;
-        }
-        else if (AUTOWIRE_CONSTRUCTOR_VALUE.equals(att)) {
+        } else if (AUTOWIRE_CONSTRUCTOR_VALUE.equals(att)) {
             autowire = AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR;
-        }
-        else if (AUTOWIRE_AUTODETECT_VALUE.equals(att)) {
+        } else if (AUTOWIRE_AUTODETECT_VALUE.equals(att)) {
             autowire = AbstractBeanDefinition.AUTOWIRE_AUTODETECT;
         }
         // Else leave default value.
@@ -597,14 +607,11 @@ public class QvpBeanDefinitionBuilder {
         }
         if (DEPENDENCY_CHECK_ALL_ATTRIBUTE_VALUE.equals(att)) {
             return AbstractBeanDefinition.DEPENDENCY_CHECK_ALL;
-        }
-        else if (DEPENDENCY_CHECK_OBJECTS_ATTRIBUTE_VALUE.equals(att)) {
+        } else if (DEPENDENCY_CHECK_OBJECTS_ATTRIBUTE_VALUE.equals(att)) {
             return AbstractBeanDefinition.DEPENDENCY_CHECK_OBJECTS;
-        }
-        else if (DEPENDENCY_CHECK_SIMPLE_ATTRIBUTE_VALUE.equals(att)) {
+        } else if (DEPENDENCY_CHECK_SIMPLE_ATTRIBUTE_VALUE.equals(att)) {
             return AbstractBeanDefinition.DEPENDENCY_CHECK_SIMPLE;
-        }
-        else {
+        } else {
             return AbstractBeanDefinition.DEPENDENCY_CHECK_NONE;
         }
     }

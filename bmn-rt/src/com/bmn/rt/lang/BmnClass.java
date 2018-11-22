@@ -11,6 +11,8 @@ import com.bmn.bean.Person;
 import com.bmn.bean.Student;
 import com.bmn.bean.TreeBean;
 import com.bmn.bean.TreeInterface;
+
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -132,6 +134,9 @@ public class BmnClass {
 
         Class<?> classes = String[][].class.getComponentType();
         System.out.println(classes);
+
+        Field filed = null;
+        filed.getGenericType();
 
 
     }

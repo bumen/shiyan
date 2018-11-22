@@ -120,7 +120,7 @@ public class ResourceUtils {
      * Create a URI instance for the given location String, replacing spaces
      * with "%20" URI encoding first.
      * 
-     * @param location the location String to convert into a URI instance
+     * @param location the location String to converter into a URI instance
      * @return the URI instance
      * @throws URISyntaxException if the location wasn't a valid URI
      */
