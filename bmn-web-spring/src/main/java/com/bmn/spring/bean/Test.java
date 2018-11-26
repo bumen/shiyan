@@ -9,6 +9,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -26,13 +27,15 @@ import org.springframework.beans.factory.support.MergedBeanDefinitionPostProcess
 import org.springframework.core.OrderComparator;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * Created by Administrator on 2017/10/24.
  */
 public class Test {
 
-    public static void main(String[] args) throws IntrospectionException, ClassNotFoundException {
+    public static void main(String[] args)
+        throws IntrospectionException, ClassNotFoundException, IOException {
         ExtendedBeanInfoFactory beanInfoFactory = new ExtendedBeanInfoFactory();
 
         BeanInfo beanInfo = beanInfoFactory.getBeanInfo(QvpContext.class);
@@ -83,8 +86,8 @@ public class Test {
     }
 
 
-    public static void createBeanTest() {
-        DefaultListableBeanFactory factory = QvpListBeanFactory.load("com/qvp/bean/qvp_bean.xml");
+    public static void createBeanTest() throws IOException {
+        DefaultListableBeanFactory factory = QvpListBeanFactory.load("spring/qvp_bean.xml");
         registerBeanPostProcessors(factory);
 
         factory.registerResolvableDependency(DependencyInterface.class, new QvpDependencyInterfaceFactory());

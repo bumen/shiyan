@@ -47,3 +47,13 @@
  * new Hashtable(), 时直接创建数组，不是在添加元素时才创建
  * new Hashtable(), 默认容量是11， 初始负载因 子是0.75f 
    
+   
+### java8 ConcurrentHashMap
+ * 第一次put操作成功后都返回null，其它再put相同key时，返回旧值
+ * key, value都不允许为null
+ * 如果key放到数组上时，通过cas原子操作更新
+ * 如果key hash相同，要通过synchronized链表头节点，然后插入链表尾
+ * 当链表长度超过8时，把链表转红黑树
+ * hashCode
+   + 通过key.hashCode()方法产生，并做高16位与低16位异或
+   + 然后与（n-1）& hash

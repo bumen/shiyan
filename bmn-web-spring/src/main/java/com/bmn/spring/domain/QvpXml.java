@@ -1,5 +1,7 @@
 package com.bmn.spring.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,9 @@ import java.util.List;
  */
 public class QvpXml {
     private List<String> list;
+
+    @Value("${com.type}")
+    private String type;
 
     public void setList(List<String> list) {
         this.list = list;

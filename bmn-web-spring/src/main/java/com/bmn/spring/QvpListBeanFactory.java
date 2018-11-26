@@ -14,11 +14,11 @@ public class QvpListBeanFactory {
         String path = filename;
         ClassPathResource res = new ClassPathResource(path);
         DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
-        factory.setAutowireCandidateResolver(new QualifierAnnotationAutowireCandidateResolver());
+//        factory.setAutowireCandidateResolver(new QualifierAnnotationAutowireCandidateResolver());
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         reader.loadBeanDefinitions(res);
 
-        factory.getBean("");
+        factory.getBean("xml");
 
         return factory;
     }

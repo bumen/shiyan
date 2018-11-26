@@ -8,7 +8,9 @@ package com.bmn.core.excel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Optional;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -66,7 +68,8 @@ public class ExcelReader {
             return "";
         }
 
-        String v = row.getCell(cellIndex).getStringCellValue();
+        Optional<Cell> c = Optional.ofNullable(row.getCell(cellIndex));
+        String v = c.map(cell -> cell.getStringCellValue()).orElse("");
 
         cellIndex++;
 

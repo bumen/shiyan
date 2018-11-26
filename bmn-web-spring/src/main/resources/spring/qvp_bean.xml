@@ -24,8 +24,8 @@
 
 	</bean>
 
-	<bean id="xml" class="com.bmn.spring.domain.QvpXml" >
-		<qualifier type="Test" value="3"/>
+	<bean id="xml" class="com.bmn.spring.domain.QvpXml" autowire-candidate="false">
+    <property name="name" value="${com.a}"/>
 	</bean>
 
 	<bean id="qvpXml" class="com.bmn.spring.domain.QvpXml" primary="true"/>
