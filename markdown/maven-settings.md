@@ -61,3 +61,17 @@
    ```
    
 ### pom 关系
+
+
+### 打包
+ * mvn clean [package | install] -DskipTests=true -f pom-staging.xml -P staging
+ * 在聚合关系中为Child Module 指定自定义名称的pom文件（如果不指定默认使用pom.xml）
+   + configuration模块使用pom-staging.xml构建项目
+   + stream模块使用默认pom.xml构建项目
+   + 了解Tycho
+   ```
+      <modules>
+              <module>stream</module>
+              <module>configuration/pom-staging.xml</module>
+      </modules> 
+   ```
