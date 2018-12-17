@@ -82,3 +82,15 @@
 #### ConfigurableEnvironment
  * 可配置的。增加了两面功能：配置profile，由于实现了ConfigurablePropertyResolver所以可以同时配置解析property
  
+ 
+#### CommandLineArgs
+ * main方法args参数抽象
+ * 有两类参数，多选参数，单一参数
+ * 如args
+   + --foo=bar --foo=tow  single one two 
+ * 作为PropertySource使用时
+   + 获取单一参数，会使用确定名称，返回所有单一参数逗号分隔如：single,one,two
+   + 获取多选参数，通过名称获取所有值逗号分隔如：foo=bar,tow
+   
+#### 标准Environment
+ * 只有系统参数，环境变量。两类属性

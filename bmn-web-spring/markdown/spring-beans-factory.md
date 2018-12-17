@@ -42,46 +42,77 @@
  
 ### 创建一个bean
  * 需要beanName, BeanDefinition, args
- 1。首先检查Instantitaion BeanPostProcessor如果可以返回。则直接返回bean对象
-   + 这个一个bean的实例化前置处理器。可以返回bean的一个代理
+ 1. 解析，并加载BeanClass
+ 2. 执行Bean实例化前置处理器
+   + 可以拿到BeanClass
+   + 作用主要返回代理，先不执行Bean的真正实例化。下次再获取Bean时才真正实例化。
+   + 如果有代理，同时会对代理执行Bean的初始化后置处理器
    
- 2。如果1步失败，则需要Bean实例化
- 3。实例化成功后返回BeanWrapper对象
- 4。实例化成功允许通过BeanPostProcessor修改BeanDefinition
- 5。执行bean实例化后置处理器。
-   + 如果处理成功。可以终止bean属性的注入。即直接返回，不进入6步。
- 6。
+ 3. 实例化Bean
+ 4. 执行Bean的MergedBeanDefinitionPostProcessor
+   + 可以拿到BeanClass
+   + 一般processor在这一步可以过滤BeanClass中的字段，方法上的注解
+   
+ 5. 执行Bean实例化后置处理器
+   + 可以拿到BeanObject
+   + 作用是可以控制Bean是否需要进行属性注入，如果不需要则直接反回bean，不进行bean的初始化流程。
+   
+ 6. 解析自动装配的属性
+   + 如果配置了自动装配，则会解析要装配的对象。但此时还并未注入到对象上，只是解析出要注入的对象。
+   + 此步完成后就拿到Bean自动装配与手动装配的所有要注入的对象。（不包括@Autowire的）
+   
+ 7. 过滤已经拿到的注入对象
+   + BeanFactory可以配置哪些对象或接口，是不进行注入的
+   
+ 8. 执行Bean实例化处理器的postProcessPropertyValues方法
+   + 可以拿到所有解析的注入属性，bean对象
+   + 可以再过滤这些属性，也可以注入@Autowaire的属性
+   
+ 9. 注入属性到Bean
+ 
+ 10. 初始化bean 
+   + 前置初始化器：可以拿bean对象
+   + 初始化方法
+   + 劶地初始化器
+   
+ 11. 注册destory
+   
  
 #### Bean 实例化：三种实例化方式
  * 按优先级从上到下
- 1。通过FactoryMethod实例化
+ 1. 通过FactoryMethod实例化
    + 如果BeanDefinition配置了FactoryMethod
- 2。通过类构造器实例化
+ 2. 通过类构造器实例化
    + 如果getBean时，指定了参数
    + 如果BeanDefinition解析出了构造器参数
    + 如果BeanDefinition配置了按构造器自动装配
    + 如果通过BeanPostProcessor，找到构造器（这也是一种自动装配类型）
- 3。java反射或cglib
+ 3. java反射或cglib
    + 通过BeanDefinition没有需要重写的方法，则使用默认构造器，通过反射实例化
    + 否则使用cglib通过实现子类实例化
  
  
 #### Bean 实例化过程
- 1。根据BeanDefinition解析beanClass
+ 1. 根据BeanDefinition解析beanClass
    + 通过BeanFactory配置的BeanClassLoader去加载BeanClass
    + BeanClassLoader, 先使用Thread.ContextClassLoader
    如果没有，则使用当前ClassUtils的ClassLoader
    如果没有，则使用systemClassLoader
+  
+ 2. 判断Bean实例化前置处理器：主要作用就是先不实例化Bean，先返回Bean的一个代理
+   + 如果有代理，直接返回代理，不进行Bean的实例化
+   + 如果解析过代理，以后就不再解析代理，而是进行真正Bean的实例化
+   + 如果没有解析过代理，则每次创建Bean（bean不是singleton），都判断这个处理器
    
  * 下面接着是通过FactoryMethod或指定构造器或默认构造器三种实例化方式
    + 优先使用FactoryMethod实例化，其次指定构造器，再是默认构造器
    + 同时构造器实例化时，还分通过自定义参数与BeanDefinition解析的参数实例化
    
- 2。判断BeanDefinition是否定义了factoryMethod. 如果有，则使用factoryMethod创建
- 3。根据beanClass通过BeanPostProcessor确定bean的构造器
- 4。如果3步找到构造器或BeanDefinition解析出是通过构造器注入或BeanDefinition有构造器参数或getBean时传入参数
- 5。如果4步成功，则通过构造器创建bean
- 6。如果4步不成功，则通过反射实例化bean
+ 3. 判断BeanDefinition是否定义了factoryMethod. 如果有，则使用factoryMethod创建
+ 4. 根据beanClass通过BeanPostProcessor确定bean的构造器
+ 5. 如果3步找到构造器或BeanDefinition解析出是通过构造器注入或BeanDefinition有构造器参数或getBean时传入参数
+ 6. 如果4步成功，则通过构造器创建bean
+ 7. 如果4步不成功，则通过反射实例化bean
  
 #### BeanDefinition构造器参数：类型与解析
  * 类型：配置时指定index, 与未指定index

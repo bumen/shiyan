@@ -24,3 +24,9 @@
    根中只记录映射关系
  * 硬盘分区表只有8个字节，而每个分区无数据要点两个字节，所以只能有４个主分区      + 如果再分区，需要在4个中拿一个做为扩展分区，再使用扩展分区上建逻辑分区
  
+### sftp 跳版机上传下载
+ * sftp -Pport name@bs.xx.corp
+ * cd 机器/online
+ * put localfile 上传
+ * get remotefile 下载
+
