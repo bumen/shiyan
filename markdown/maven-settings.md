@@ -125,22 +125,32 @@
    
 ### 依赖管理模型
  * 查询命令  
- `mvn dependency:tree -Dverbose`
+   + `mvn dependency:tree -Dverbose`  
+   + `mvn dependency:tree -Dverbose -Dincludes=<groupId>:<artifactId>`: 查看某个module的依赖
+   + 最后写着compile的就是编译成功的。
+   + 最后写着omitted for duplicate的就是有jar包被重复依赖了，但是jar包的版本是一样的。
+   + 最后写着omitted for conflict with xxxx的，说明和别的jar包版本冲突了，而该行的jar包不会被引入。
+   
  * 依赖具有传递特性
  * 依赖范围<scope>
    + test：范围指的是测试范围有效，在编译和打包时都不会使用这个依赖
+   只测试有效
    + compile：（默认值）范围指的是在编码范围有效，在编译和打包时都会将依赖打进去
+   编译，测试，运行有效
    + provided：在编译和测试过程中有效，最后生成包时不会加入
+   编译，测试有效
    + runtime：在运行时依赖，在编译时不依赖。如-对象api接口为compile, 对于第三方实现接口可以为runtime
+   测试，运行有效
    + system：与provided一样，不过被依赖不会去maven仓库取，而是从本地文件系统拿，一定需要配合systemPath属性使用
+   编译，测试有效
  
 
-#### 依赖冲突（由于依赖的传递特性）
- * 相同路径深度
+#### 依赖冲突-调解（由于依赖的传递特性）
+ * 相同路径深度：第一声明者优先
    + a->b(1.0), c->b(1.1), d->a,c. 这时候b有两个版本会产生冲突。
    在d的pom中，哪个依赖先写就使用先配置的依赖的版本。
    + 对于相同路径深度的模块中的包依赖，哪个模块写在pom依赖前，就依赖哪个版本
- * 不同路径深度
+ * 不同路径深度：路径最近者优先
    + a->b(1.0), c->b(1.1), d->a, e->d,c. 这时候b有两个版本会产生冲突。
    在e的pom中，e->c->b, e->d->a->b 两条依赖关系。会选择最小路径e->b(1.1)
   
