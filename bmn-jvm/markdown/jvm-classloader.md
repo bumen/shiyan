@@ -48,8 +48,18 @@
   * SPI加载
   * OSGI加载
   * ClassLoader类的链接
+  * 注意同一个类加载器的实例和同一个class文件只能被加载器一次，多次加载将报错
+    + 实现热部署需要必须让同一个class文件可以根据不同的类加载器重复加载
   
-### Thread.currentThread.getContextClassLoader()
+### 双亲委派模型的破坏者: Thread.currentThread.getContextClassLoader()
+  >在Java应用中存在着很多服务提供者接口（Service Provider Interface，SPI），
+  这些接口允许第三方为它们提供实现，如常见的 SPI 有 JDBC、JNDI等，这些 SPI 的接口属于 Java 核心库，
+  一般存在rt.jar包中，由Bootstrap类加载器加载，而 SPI 的第三方实现代码则是作为Java应用所依赖的 jar 包被存放在classpath路径下，
+  由于SPI接口中的代码经常需要加载具体的第三方实现类并调用其相关方法，但SPI的核心接口类是由引导类加载器来加载的，
+  而Bootstrap类加载器无法直接加载SPI的实现类，同时由于双亲委派模式的存在，
+  Bootstrap类加载器也无法反向委托AppClassLoader加载器SPI的实现类。
+  在这种情况下，我们就需要一种特殊的类加载器来加载第三方的类库，而线程上下文类加载器就是很好的选择。
+  
   * 线程上下文加载器
   * 通过setContextClassLoader指定一个类加载器
   * 默认context加载器是appclassloader由Launch设置
@@ -62,5 +72,6 @@
     + 通过contextclassloader实现用指定的类型加载器接口实现 
   
 ### jvm判断两个类是否相等
- * 通过类名+类加载器
+ * 类的完整类名必须一致，包括包名。
+ * 加载这个类的ClassLoader(指ClassLoader实例对象)必须相同。
  

@@ -205,6 +205,14 @@ public class GenericClass {
         // System.out.println(m(12d, 2d));
     }
 
+    public static <T> void write(List<? super T> list, T r) {
+        list.add(r);
+    }
+
+    public static <T> T read(List<? extends  T> list) {
+        return list.get(0);
+    }
+
     static double m(float a, double b) {
         return a + b;
     }
