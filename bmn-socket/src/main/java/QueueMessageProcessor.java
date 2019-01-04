@@ -1,14 +1,11 @@
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.lang.reflect.Modifier;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.myapp.data.MaintainTask;
-import com.myapp.global.Instances;
-import com.myapp.msg.base.BaseMsg;
-import com.myapp.server.ServerConfigBean;
 
 public class QueueMessageProcessor implements Runnable, UncaughtExceptionHandler {
 
@@ -87,7 +84,7 @@ public class QueueMessageProcessor implements Runnable, UncaughtExceptionHandler
 		while (!stop) {
 			try {
 				msg = this.get();
-				Instances.getMsgRouter().execute(msg);
+//				Instances.getMsgRouter().execute(msg);
 			} catch (Exception e) {
 				logger.error(String.format("Get message Name[%s] in thread[%s] index[%d]", msg.getName(), this.name,
 						this.index), e);
@@ -140,5 +137,30 @@ public class QueueMessageProcessor implements Runnable, UncaughtExceptionHandler
 		this.thread.interrupt();
 
 		logger.info(String.format("Thread [%s], index[%d] is stopped.", this.name, this.index));
+	}
+
+	private class BaseMsg {
+
+		public Object getName() {
+			return null;
+		}
+	}
+
+	private static class MaintainTask {
+
+		public static void start(boolean ispublic) {
+
+		}
+	}
+
+	private static class ServerConfigBean {
+
+		public static ServerConfigBean getInstance() {
+			return null;
+		}
+
+		public boolean isPublic() {
+			return true;
+		}
 	}
 }

@@ -1,4 +1,5 @@
 ## java nio
+ * http://stenographist11.rssing.com/chan-7008770/all_p805.html
 
 ### socket nio 
  * ServerSocketChannel配置非阻塞
