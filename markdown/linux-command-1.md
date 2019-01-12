@@ -68,3 +68,37 @@
     root:/bin/bash
     bin:/sbin/nologin
    ```
+   
+#### xargs
+ * xargs 可以读入stdin的内容，并且以空白字元或断行字元作为分隔，将stdin的内容分隔成为arguments。
+ 
+ * -0 ：当sdtin含有特殊字元时候，将其当成一般字符，想/'空格等
+ * -a file 从文件中读入作为sdtin
+ * -n 
+   + num 后面加次数，表示命令在执行的时候一次用的argument的个数，默认是用所有的
+ * -p 
+   + 操作具有可交互性，每次执行comand都交互式提示用户选择，当每次执行一个argument的时候询问一次用户
+ * -t 表示先打印命令，然后再执行。
+ * -i 或者是-I，这得看linux支持了
+   + 将xargs的每项名称，一般是一行一行赋值给{}，可以用{}代替。
+   + 如：ls *.txt |xargs -t -i mv {} {}.bak。
+   把.txt文件重命名为.txt.bak
+ * -r  no-run-if-empty 
+   + 如果没有要处理的参数传递给xargsxargs 默认是带 空参数运行一次，
+   如果你希望无参数时，停止 xargs，直接退出，使用 -r 选项即可，
+   其可以防止xargs 后面命令带空参数运行报错。
+ * -s num 
+   + xargs后面那个命令的最大命令行字符数(含空格) 
+ * -L  
+   + 从标准输入一次读取num行送给Command命令 ，-l和-L功能一样
+ * -d delim 
+   + 分隔符，默认的xargs分隔符是回车，argument的分隔符是空格，这里修改的是xargs的分隔符
+ * find 命令一起使用
+   >管 道是把一个命令的输出传递给另一个命令作为输入，比如：command1 | command2但是command2仅仅把输出的内容作为输入参数。
+   >find . -name "install.log" -print打印出的是install.log这个字符串，
+   >如果仅仅使用管道，那么command2能够使用的仅仅是install.log这个字符串， 不能把它当作文件来进行处理。
+   + 如：find . -name "install.log" -print | cat
+   打印的是文件名
+   + 如：find . -name "install.log" -print | xargs cat
+   打印的是文件内容
+ 

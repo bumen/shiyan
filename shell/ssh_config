@@ -1,0 +1,18 @@
+Host sai
+  HostName xxx
+  Port 2221
+  User xxx
+  IdentityFile ~/.ssh/id_rsa
+
+
+Host alphaj
+ HostName xxx
+ User x
+
+Host stagingC
+  HostName 1.8.8.2
+  Port 22
+  User xx
+  ServerAliveInterval 10
+  IdentityFile ~/.ssh/id_rsa
+  LocalForward 7001 w.b.com:2221
