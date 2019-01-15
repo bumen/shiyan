@@ -1,5 +1,13 @@
 ## mockito
 
+### Mock 与 Stub 的区别
+ * Mock 不是 Stub，两者是有区别的：
+   + 前者被称为 mockist TDD，而后者一般称为 classic TDD
+   + 前者是基于行为的验证（behavior verification），后者是基于状态的验证 （state verification）
+   + 前者使用的是模拟的对象，而后者使用的是真实的对象。
+ * 执行过程
+   + 先stub打桩，再验证
+
 ### 静态引入
  * `org.mockito.Mockito.*;`
  
@@ -67,7 +75,44 @@
   
     String url = "https://x/oauth/v2/token?grant_type=refresh_token&client_id=x&client_secret=x&refresh_token=x";
     Assert.assertEquals(url, argument.getValue().getURI().toString());
+    
+    cache.set(valueKey, "3");
+    // 验证时捕获
+    ArgumentCaptor<Object> argument = ArgumentCaptor.forClass(Object.class);
+    verify(cache).set(eq(valueKey), argument.capture());
+    when(cache.get(valueKey)).thenReturn(argument.getValue());
+            
    ```
+   
+### mock(Channel.class, RETURNS_DEEP_STUBS);
+ * 配置RETURNS_DEEP_STUBS后，会自动mock所需的对象
+ ``` 
+    when(ctx.channel()).thenReturn(channel);
+    when(ctx.channel().attr(CONTEXT).get()).thenReturn(asrContext);
+    // 会自动mock channel中的Attribute对象
+ ```
+ 
+### 使用方法预期回调接口生成期望值（Answer结构
+ ``` 
+    when(mockList.get(anyInt())).thenAnswer(new CustomAnswer());
+    assertEquals("hello world:0",mockList.get(0));
+    assertEquals("hello world:999",mockList.get(999));
+    
+     private class CustomAnswer implements Answer<String>{
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
+                return "hello world:"+args[0];
+            }
+     }
+        
+ ```
+ 
+### 用spy监控真实对象  
+ * InjectMocks创建这个类的对象并自动将标记@Mock、@Spy等注解的属性值注入到这个中
+ 
+#### 使用doReturn-when可以避免when-thenReturn调用真实对象api
+ * doReturn(999).when(spy).get(999);
    
 ### 限制 
  * 三种类型不能被测试
