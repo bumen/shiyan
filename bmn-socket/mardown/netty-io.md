@@ -1,5 +1,9 @@
 ## Netty权威指南
 
+ * 共两个线程池
+   + Accpetor线程池
+   + I/O读写线程池
+
 ### 优点高性能
  * 采用异步非阻塞的I/O模型，基于Reactor模式实现
  * tcp接收与发送缓冲区使用直接内存代替堆内存，避免了内存复制，提升了i/o读取与写入性能
@@ -110,6 +114,9 @@
    + 功能强大，支持多种io模型
    
 ### netty
+
+ * 粘包：一次获取取了2个包
+ * 拆包：一次获取1.5包，二次获取0.5个包。或一个获取0.5包，二次获取1.5包。
 
 #### tcp粘包与拆包发生的原因
  * 有两个粘包：发送端粘包与接收端粘包
@@ -365,3 +372,28 @@
    + 流量控制
    + Dubbo协议的编解码Handler
    
+### 优雅关闭
+ * gracefulShutdownQuietPeriod: 平静期
+   + 平静期，保证平静期内提交的任务被执行
+   
+ * gracefulShutdownQuietPeriod == 0
+   + 没有设置平静期
+   + 再执行完本次所有任务后，就关闭
+   + 如果没有任务也可以通过nanoTime - lastExecutionTime <= gracefulShutdownQuietPeriod判断来关闭
+ * gracefulShutdownQuietPeriod > 0
+   + 当所有任务都执行完后，先判断是否超时
+   + 如果没有超时判断是否在平静期
+   + 是平静期：还不能关闭。再等等
+   + 过了平静期：则可以关闭。平静期之前会执行完所有提交的任务。平静期之后提交的任务不会再执行。
+ 
+ * 如果当前NioEventLoop线程的状态还不是处于关闭相关的状态的话，则通过自旋锁的方式将当前NioEventLoop线程的状态修改为’ST_SHUTTING_DOWN’。
+   + 从我们当前优雅关闭的流程来说，当前NioEventLoop线程的此时就是ST_SHUTTING_DOWN了。
+ * 判断，如果NioEventLoop事件循环结束了
+   + 但是‘gracefulShutdownStartTime’成员变量却为0，则说明事件循环不是因为confirmShutdown()方法而导致的结束。
+   + 那么就打印一个错误日志，告知当前的EventExecutor的实现是由问题的，因为事件循环的终止必须是通过调用confirmShutdown()方法来实现的。
+   + 也就是说，事件循环能够正确退出，也就是因为关闭操作被确认了
+ * 此时会通过自旋锁的方式再次调用一次confirmShutdown()
+   + 以确保所有的NioEventLoop中taskQueue中所有的任务以及用户自定义的所有shutdownHook也都执行了。之后才会进行关闭操作。
+ * cleanup()：
+ * 修改NioEventLoop线程的状态为’ST_TERMINATED’。
+   + 注意，在此操作完成之后，所有提交至该NioEventLoop显示的任务都会被拒绝，也就是该NioEventLoop不会再接收任何的任务了。
