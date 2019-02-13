@@ -87,7 +87,7 @@ public class NioSelector {
  * 2、channel在注册到selector之前，必须设成非阻塞的。c1.configureBlocking(false);一但被注册，就不能再设为阻塞的了。
  */
 
-        c1.validOps();  //获取channel所支持的就都状态。如果SocketChannel不支持--Accpet操作
+        c1.validOps();  //获取channel所支持的就都状态。如SocketChannel不支持--Accpet操作
 
 /**
  * 1. channel关闭时，相关的Key会自动取消

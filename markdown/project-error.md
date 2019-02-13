@@ -1,6 +1,17 @@
 ## 项目中的问题
 
 
+### centos服务器下长时间跑sprint boot2.0.4应用程序/tmp临时目录满后系统会自动删除临时目录
+ * 再次上传时，会抛出异常
+```
+There was an unexpected error (type=Internal Server Error, status=500).
+Failed to parse multipart servlet request; nested exception is java.io.IOException: 
+The temporary upload location [/tmp/tomcat.8145190609103780086.8090/work/Tomcat/localhost/ROOT] is not valid
+```
+
+### http post 发送form-data与x-www-form-urlencoded区别
+
+
 ### 网络问题
 
 #### netty网络延时01
