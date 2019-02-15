@@ -12,6 +12,13 @@ enum BmnPartner {
     LENOVO
 }
 
+enum ErrorCode {
+    ALL
+    OK
+    FORCE_RECONNECT
+    FORCE_CLOSE
+}
+
 
 struct BmnAnswer {
     1: required string r
