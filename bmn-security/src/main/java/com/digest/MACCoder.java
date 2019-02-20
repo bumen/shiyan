@@ -1,5 +1,6 @@
 package com.digest;
 
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import javax.crypto.KeyGenerator;
@@ -72,5 +73,43 @@ public abstract class MACCoder {
         Mac mac = Mac.getInstance(secretKey.getAlgorithm());
         mac.init(secretKey);
         return mac.doFinal(data);
+    }
+
+
+    private static final String CHARSET_NAME = "utf-8";
+
+    public static String encodeHmacSHA256(String data, byte[] key)
+        throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+        return encodeHmacSHA256(data, key, CHARSET_NAME);
+    }
+
+    public static String encodeHmacSHA256(String data, String key)
+        throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+        return encodeHmacSHA256(data, key, CHARSET_NAME);
+    }
+
+    public static String encodeHmacSHA256(String data, String key, String charsetName)
+        throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+        return encodeHmacSHA256(data, key.getBytes(charsetName), charsetName);
+    }
+
+    /**
+     * 加密数据，编码为16进制字符串
+     * @param data
+     * @param key
+     * @param charsetName
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeyException
+     * @throws UnsupportedEncodingException
+     */
+    public static String encodeHmacSHA256(String data, byte[] key, String charsetName)
+        throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
+        byte[] array = encodeHmacSHA256(data.getBytes(charsetName), key);
+        StringBuilder sb = new StringBuilder();
+        for (byte item : array) {
+            sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
+        }
+        return sb.toString();
     }
 }
