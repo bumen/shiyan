@@ -31,13 +31,18 @@
    
  * 当注册成功后，先执行pendingHandlerCallbackHead链表，然后再fireRegister
    
+* remove
+ * 可以在handler执行中调用删除当前handler
+ 删除后还只是从pipeline链表中删除。看还保留着prev与next
 
 
 #### destroy()
- * 
+ * 处理unregister事件结果后，如果channel.isopen=false，则会删除掉所有handler
+ 从TailContext->HeadContext删除。删除时掉用handerRemove方法
 
 #### pipeline中的inbound与oubound
- * pipeline调用inbound是从HeadContext开始向下
+ * pipeline调用inbound是从HeadContext开始向下，一直到TailContext后（中间可能会断断不fire，则到不了TailContext)
+ TailContext是一个收尾工作。最后再逐层回溯到HeadContext
  * pipeline调用outbound是人TailContext开始向上
  * inboundHanlder一直向下直到TailContext，结束
  * outboundHandler一真向上直到HeadContext，再调用channel的oubound方法
@@ -69,6 +74,18 @@
  * pipeline中的outbound接口调用，都会从TailContext开始一直向上
    + + 所以不要在outboundHandler中使用pipeline调用outbound接口，会死循环
  * ctx中的outbound接口调用，是从当前Context开始一直向上
+ 
+#### HeadContext的channelRegistered
+ * 先执行pendingHandlerCallbackHead链表
+ * 再执行fireChannelRegistered
+ 
+#### HeadContext的channelActive
+ * 先执行fireChannelActive
+ * 如果channel配置为autoRead，则会处理发自动读取操作
+ 
+#### HeadContext的channelReadComplete
+ * 先执行fireChannelReadComplete
+ * 如果channel配置为autoRead，则会处理发自动读取操作
 
 #### TailContext是inbound类型
  * 当通过ctx调用inbound接口时，最张会调用到TailContext中

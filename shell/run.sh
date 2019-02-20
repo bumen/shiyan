@@ -1,4 +1,4 @@
-#!/bin/sh
+  #!/bin/sh
 PID_FILE=run.pid
 MAIN_FILE=connection-server-1.0.4.jar
 DEBUG_OPS=" -agentlib:jdwp=transport=dt_socket,suspend=n,server=y,address=18001"
