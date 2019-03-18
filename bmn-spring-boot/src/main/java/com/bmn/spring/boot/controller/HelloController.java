@@ -1,4 +1,4 @@
-package com.bmn.bmn.spring.boot.controller;
+package com.bmn.spring.boot.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

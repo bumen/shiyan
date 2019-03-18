@@ -54,8 +54,6 @@ public class ReactorTests {
         TimeUnit.MICROSECONDS.sleep(1000);
     }
 
-
-
     private static class UserInfo {
         public long time;
         public String name;

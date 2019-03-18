@@ -43,3 +43,8 @@ The temporary upload location [/tmp/tomcat.8145190609103780086.8090/work/Tomcat/
  * 解决
    1。A当第一个超时后，再发送第二个时使用新连接发送
   
+### kafka 发送消息时timeoutException
+ * 如果发送数据量比较大，造成发送数据TimeoutException
+ * 通过走外网向外发送数据
+   + 因为占满了网络出口流量，导致发送数据积压
+   + 临时解决加出网络出口流量带宽

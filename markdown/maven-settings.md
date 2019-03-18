@@ -310,3 +310,13 @@
               <module>configuration/pom-staging.xml</module>
       </modules> 
    ```
+   
+### mvn
+ * 查看当前生效的settings
+   + mvn help:effective-settings
+   + mvn help:effective-pom 
+ * 下载源码
+   + mvn dependency:source
+   + 需要进入pom.xml文件夹mvn dependency:sources -X  --settings settings.xml
+   
+ * mvn install --settings settings.xml 指定配置文件

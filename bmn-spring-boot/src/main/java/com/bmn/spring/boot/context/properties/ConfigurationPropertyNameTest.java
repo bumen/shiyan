@@ -1,4 +1,4 @@
-package com.bmn.bmn.spring.boot.context.properties;
+package com.bmn.spring.boot.context.properties;
 
 import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
 import org.springframework.boot.context.properties.source.ConfigurationPropertyName.Form;

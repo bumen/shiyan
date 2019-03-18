@@ -1,4 +1,4 @@
-package com.bmn.bmn.spring.boot;
+package com.bmn.spring.boot;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
