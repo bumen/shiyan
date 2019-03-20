@@ -137,3 +137,6 @@
    + COMMAND — 进程名称（命令名/命令行）
    
 ### nload 查询出口入口流量
+
+### tcpdump 
+ * tcpdump -w /tmp/hugo_client.pacp host 127.0.0.1 and port 9100

@@ -21,11 +21,11 @@ public class WebClientTest {
 
         System.out.println("------------------------------------");
 
-        request();
+        //request();
 
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
 
-        request();
+        //request();
     }
 
 
