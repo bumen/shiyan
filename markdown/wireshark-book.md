@@ -251,3 +251,17 @@
  * ICMP协议
    + 负责提供在TCP/IP网络上设备，服务以及路由器可用性信息
    
+   
+### TCP常见错误
+ * Tcp previous segment lost（tcp先前的分片丢失）
+ * Tcpacked lost segment（tcp应答丢失）
+ * Tcp window update（tcp窗口更新）
+ * Tcp dup ack（tcp重复应答）
+ * Tcp keep alive（tcp保持活动）
+ * Tcp retransmission（tcp重传）
+ * Tcp ACKed unseen segument （tcp看不见确认应答）
+ * tcp port numbers reused（tcp端口重复使用）
+ * tcp retransmission（tcp重传）
+ * tcp fast retransmission (tcp快速重传)
+ * TCP  Previoussegment lost（发送方数据段丢失）
+ * tcp spurious retransmission(tcp伪重传)

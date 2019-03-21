@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 
 public class WebClientTest {
 
-    private static final WebClient webClient = WebClient.create("http://localhost:11011");
+    private static final WebClient webClient = WebClient.create("http://172.16.22.134:11011");
 
     @Test
     public void simpleTest() throws InterruptedException {

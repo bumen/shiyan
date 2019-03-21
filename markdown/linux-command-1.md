@@ -104,6 +104,9 @@
    + 如：find . -name "install.log" -print | xargs cat
    打印的是文件内容
  
+### grep
+ * 
+ 
 ### sed 向文件添加删除某行
  * sed -i '/^,N.t,F$/d' s2.txt
    + 删除文件中所有“,N.t,F”的字符串行
