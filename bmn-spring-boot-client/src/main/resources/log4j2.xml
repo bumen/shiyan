@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="60" shutdownHook="disable">
+    <Properties>
+        <Property name="LOG_PREFIX">/data/logs/bmn-spring-boot/bmn-spring-boot</Property>
+        <Property name="PATTERN_SUFFIX">-%d{yyyy-MM-dd-HH}.%i.log.gz</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingRandomAccessFile name="LOGFILE"
+                                 fileName="${LOG_PREFIX}.log"
+                                 filePattern="${LOG_PREFIX}${PATTERN_SUFFIX}"
+                                 immediateFlush="false">
+            <PatternLayout pattern="[%d][%-5p][%t] %c - %X %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="140"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="LOGFILEERROR"
+                                 fileName="${LOG_PREFIX}-error.log"
+                                 filePattern="${LOG_PREFIX}-error${PATTERN_SUFFIX}">
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d][%-5p][%t] %c - %X %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="14"/>
+        </RollingRandomAccessFile>
+
+        <Async name="LOGASYNC">
+            <AppenderRef ref="LOGFILE"/>
+            <AppenderRef ref="LOGFILEERROR"/>
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.sai" level="DEBUG"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="LOGASYNC"/>
+        </Root>
+    </Loggers>
+</Configuration>
