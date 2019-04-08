@@ -6,17 +6,12 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
+echo start config BMN HOME
+BMN_USR_PATH=~/data/home/user00/bmn/usr
 
-SAI_HOME=~/data/home/user00/sai/usr
-
-SAI_PROFILE=$SAI_HOME/.bash_profile
-echo $SAI_PROFILE
-if [ -f $SAI_PROFILE ]; then
-	. "$SAI_PROFILE";
-	echo init $SAI_PROFILE success
+if [ -e $BMN_USR_PATH ];  then
+  echo "found BMN HOME"
+  . $BMN_USR_PATH/.bash_profile
+else
+  echo "can't found BMN HOME: $BMN_USR_PATH"
 fi
-	
-
-PATH=$PATH:$HOME/.local/bin:$HOME/bin
-
-export PATH

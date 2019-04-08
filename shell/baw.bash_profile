@@ -1,14 +1,13 @@
 # .bash_profile
 
-echo start config sai path
 # Get the aliases and functions
 
-SAI_USR_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BMN_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo sai usr path is $SAI_USR_PATH
+echo bmn usr home is $BMN_HOME
 
-if [ -f $SAI_USR_PATH/.bashrc ]; then
-	. $SAI_USR_PATH/.bashrc
+if [ -f $BMN_HOME/.bashrc ]; then
+	. $BMN_HOME/.bashrc
 fi
 
 # User specific environment and startup programs
@@ -18,13 +17,13 @@ FIRST_PATH=`echo $PATH | cut -d : -f 1`
 
 echo first path is $FIRST_PATH
 
-if [ "$SAI_USR_PATH/bin" = "$FIRST_PATH" ] ; then 
+if [ "$BMN_HOME/bin" = "$FIRST_PATH" ] ; then
 	echo path already had: $FIRST_PATH;
 	return;
 fi
 
-PATH=$SAI_HOME/bin:$PATH
+PATH=$BMN_HOME/bin:$PATH
 
 export PATH
 
-echo sai home path init success
+echo BMN home path init success
