@@ -12,3 +12,8 @@
     IdentityFile ~/.ssh/id_rsa  // 配置免密登录
     LocalForward 7001 ww.baid.com:2221    // 本地端口7001， 转发到跳版机2221端口
  ```
+ 
+ ### 在本地添加ssh-key到远程服务器
+  ``` 
+    ssh 服务器用户名@服务器地址 "echo \"`cat .ssh/id_rsa.pub`\" >> .ssh/authorized_keys"
+  ```
