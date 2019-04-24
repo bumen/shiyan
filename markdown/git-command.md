@@ -1,5 +1,21 @@
 ## Git命令
 
+### windows 下中文乱码配置
+ * 配置
+   + i18n.logoutputencoding=utf-8
+   + i18n.commitencoding=utf-8
+   + 同时在home/下创建.bashrc 加入export LESSCHARSET=utf-8
+   + idea 中使用bash.exe
+   + windows窗口中使用git-bash.exe
+     
+ 
+ * 查看windows窗口编码
+   + 进入cmd 
+   + chcp
+   + chcp 65001   #换成utf-8代码页
+   + chcp 936       #换成默认的gbk
+   + chcp 437       #美国英语
+
 ### 把多个commit合并成一个commit
  * git rebase -i 
 
