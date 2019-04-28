@@ -3,11 +3,18 @@
 ### windows 下中文乱码配置
  * 配置
    + i18n.logoutputencoding=utf-8
+     - 好像也可以不配置
    + i18n.commitencoding=utf-8
+     - 好像也可以不配置
    + 同时在home/下创建.bashrc 加入export LESSCHARSET=utf-8
    + idea 中使用bash.exe
    + windows窗口中使用git-bash.exe
-     
+   
+ * idea Terminal替换成Git bash
+   + 修改C:\Program Files\Git\etc\bash.bashrc
+     > export LANG="zh_CN.UTF-8"
+     > export LC_ALL="zh_CN.UTF-8"
+   + 重启窗口
  
  * 查看windows窗口编码
    + 进入cmd 

@@ -143,3 +143,10 @@
 
 ### tcpdump 
  * tcpdump -w /tmp/hugo_client.pacp host 127.0.0.1 and port 9100
+ 
+### 查看进程运行时间
+ * 可以top查看
+ * ps -p pid -o lstart,etime
+   + o自己定义格式化
+   + lstart 启动时间
+   + etime 运行时间
