@@ -30,7 +30,7 @@ public abstract class RSACoder {
 
     private static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
-    private static final int KEY_SIZE = 512;
+    private static final int KEY_SIZE = 1024;
 
     public static byte[] decryptByPrivateKey(byte[] data, byte[] key)
         throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {

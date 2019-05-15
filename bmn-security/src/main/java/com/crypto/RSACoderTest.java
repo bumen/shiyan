@@ -68,6 +68,17 @@ public class RSACoderTest {
         test.initKey();
         test.test();
         test.testSign();
+
+        System.out.println(toHexString(test.publicKey));
+
+    }
+
+    private static String toHexString(byte[] data) {
+        StringBuilder sb = new StringBuilder();
+        for (byte item : data) {
+            sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
+        }
+        return sb.toString();
     }
 
 }
