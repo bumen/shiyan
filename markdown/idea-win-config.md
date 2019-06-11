@@ -16,6 +16,9 @@
  
 ### Editor
  * General
+   + Auto Import:
+     - Java: 
+     1. [x] Optimize imports on the fly(for current project) 
  * Font
    + font: Courier New
    + size: 15
