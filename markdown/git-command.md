@@ -22,6 +22,19 @@
    + chcp 65001   #换成utf-8代码页
    + chcp 936       #换成默认的gbk
    + chcp 437       #美国英语
+   
+### Git Bash配置
+``` 
+$ git config --global --list
+core.quotepath=false
+core.excludesfile=C:\Users\playcrab\Documents\gitignore_global.txt
+core.autocrlf=false
+core.safecrlf=false
+difftool.sourcetree.cmd='' "$LOCAL" "$REMOTE"
+mergetool.sourcetree.cmd=''
+mergetool.sourcetree.trustexitcode=true
+
+```
 
 ### 把多个commit合并成一个commit
  * git rebase -i 
