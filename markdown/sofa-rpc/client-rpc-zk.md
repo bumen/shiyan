@@ -55,3 +55,10 @@
  * 每个ProviderInfo都跟据协议类型创建一个ClientTransport
  
  * ProviderInfo为负载均衡使用
+ 
+   
+### Consumer订阅Provider
+ * 首先订阅接口路径下的Providers
+ * 获取所有Providers
+ * 过滤protocal 相同且uniqueId相同的Provider
+ 

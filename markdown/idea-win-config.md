@@ -1,5 +1,22 @@
 ## IDEA 配置
  * version: 2019.1 Ultimate Edition
+ 
+### IDEA System,Config文件位置调整
+ * 默认位置：c:\Documents and Settings\${User}\.IntelliJIdea2019.1）
+ * 作用：存放IDEA的运行时必要的数据文件（配置、index等）
+   + 项目中的文件通常会比较多，IDEA会为每个文件建立索引的，所以会占用不少的磁盘空间。我们可以将其转移到其它磁盘。
+ * 调整位置
+   + 在${IDEA_HOME}/bin目录下有一个idea.properties文件，假设你要将目录 调整到D：/idea_data目录下
+   ``` 
+   1） 关闭IDEA
+   2） 去掉idea.config.path、idea.system.path前的注释。
+   
+   3）将idea.config.path的值调整为d:/idea_data/config，将idea.system.path调整为d:/idea_data/system
+   
+   4）从c:\Documents and Settings${User}\.IntelliJIdea2019.1目录下，将.IntelliJIdea2017.3目录下的内容全部拷贝到d:/idea_data目录下。
+   
+   5）重启idea，在C盘并不会重新生成索引文件（这说明你的配置生效了）。
+   ```
 
 ### Appearance
  * Theme
@@ -18,7 +35,8 @@
  * General
    + Auto Import:
      - Java: 
-     1. [x] Optimize imports on the fly(for current project) 
+     1. [x] Add unambiguous imports on the fly: 导到包时打开模糊推段
+     2. [x] Optimize imports on the fly(for current project): 自动删除没用的包
  * Font
    + font: Courier New
    + size: 15
@@ -54,6 +72,8 @@
  * Live Templates
  
  * File Types
+   + Ignore files and folders
+     - 添加要隐藏的文件：如*.iml
  
 
    
