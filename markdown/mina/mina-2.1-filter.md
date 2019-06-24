@@ -21,7 +21,14 @@
    + 会关联IoSession
    
  * HeadFilter
+   + 处理写消息到消息队列
+      - 通知processor消费消息
+   + 处理关闭连接
+      - 将session写入removeQueue
+      - 通知processor处理关闭连接接口
  * TailFilter
+   + 将processor发出的事件，通知到IoHandler
+   
  
  * fireSessionCreated
    + 从head执行
