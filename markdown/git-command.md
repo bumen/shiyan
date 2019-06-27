@@ -191,7 +191,10 @@ mergetool.sourcetree.trustexitcode=true
    + git reset （一个比较新的版本）
    + git checkout -- . 回滚所有提交错的commit
    + git push origin -f 强制推送到远程
-   > 
+   > 注意，此时别人在git pull时，还是有问题。可能需要自己再reset到远程最新版本。
+   > 然后再将不是自己修改的文件，从stage空间还原最新
+   > 最后在重新提交自己的修改
+   > 再git push 就可以了
    
  * 正确流程
    1. 
