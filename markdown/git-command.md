@@ -72,7 +72,7 @@ mergetool.sourcetree.trustexitcode=true
  * git reset --soft HEAD^
    + 也可以写成HEAD~1
    + HEAD~2，回上两个版本
-   + 还没有Push时，只是commit。则回退到上一个版本
+   + 则回退到上一个版本
    
 ### 分支
  * git branch -vv
@@ -212,6 +212,43 @@ mergetool.sourcetree.trustexitcode=true
      + 再git add
      + 再git push
      
-
      
+     
+### HEAD指针
+
+ * 本地commit2次，还没有Push
+``` 
+    $ git log
+    commit 211b18f057d48c5aeb565dcabe2a2d5f0c8645b6 (HEAD -> master)
+    Author: bmn <562655151@qq.com>
+    Date:   Thu Jun 27 19:03:08 2019 +0800
+    
+        修改markdown
+    
+    commit f591e32c4f65cb6b64bf6dd684232db64b5f68ba
+    Author: bmn <562655151@qq.com>
+    Date:   Thu Jun 27 19:01:02 2019 +0800
+    
+        update markdown
+    
+    commit a197eb3a18df704e1d567b3938cd7d6a876905a8 (origin/master, origin/HEAD)
+
+```
+* 执行git push origin后
+  + 三个指针指向一样的commit
+``` 
+    $ git log
+    commit 211b18f057d48c5aeb565dcabe2a2d5f0c8645b6 (HEAD -> master, origin/master, origin/HEAD)
+    Author: bmn <562655151@qq.com>
+    Date:   Thu Jun 27 19:03:08 2019 +0800
+    
+        修改markdown
+    
+    commit f591e32c4f65cb6b64bf6dd684232db64b5f68ba
+    Author: bmn <562655151@qq.com>
+    Date:   Thu Jun 27 19:01:02 2019 +0800
+    
+        update markdown
+
+```
    
