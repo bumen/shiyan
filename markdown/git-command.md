@@ -59,7 +59,21 @@ mergetool.sourcetree.trustexitcode=true
  * git revert [commit]
    + 新建一个commit，用来撤销指定commit
    + 后者的所有变化都将被前者抵消，并且应用到当前分支
+   
+ * git reset --mixed 与 git reset 一样
+   + 不删除工作空间改动代码，撤销commit，并且撤销git add . 操作
  
+ * git reset --soft
+   + 不删除工作空间改动代码，撤销commit，不撤销git add . 
+   
+ * git reset --hard
+   + 删除工作空间改动代码，撤销commit，撤销git add . 
+   
+ * git reset --soft HEAD^
+   + 也可以写成HEAD~1
+   + HEAD~2，回上两个版本
+   + 还没有Push时，只是commit。则回退到上一个版本
+   
 ### 分支
  * git branch -vv
    + 查看本地分支与远程分支关联
@@ -123,6 +137,9 @@ mergetool.sourcetree.trustexitcode=true
 ### merge
  * git merge --no-ff master
  
+### commit 
+ * git commit -- amend
+ 
 ### stash 
  * git stash 
    + 保存当前工作区与暂存区内容
@@ -146,3 +163,52 @@ mergetool.sourcetree.trustexitcode=true
    + 忽略.gitignore文件
  * git update-index --assume-unchanged /path/to/*
    + 忽略目录下的所有文件。对子目录无效
+   
+### git pull之后冲突
+ * git pull其实是两步操作
+   + git fetch: 先把代码拉下来
+   + git merge：再与本地merge
+   
+ * 正常情况下会自动merge成功。生成commit
+ 
+ * 当本地代码与远程冲突后，merge失败
+   + 此时fetch下来的所有文件都会放到暂存区
+     - 不管是与本地有冲突的文件还是没有冲突的别人修改过的文件都会放到暂存区
+     因为fetch之后，相当于有了与我本地不同的文件。
+     因为本地不同的文件会放到暂存区
+   + 此时需要手动解决冲突
+   + 解决完冲突后，将所有fetch下的暂存区的文件，继续add后
+   + 此时相当于merge完成了。会自动生成commit
+   + 然后再push到远程
+   
+ * 问题
+   + 在merge冲突后，再解决完冲突后没有将暂存区中其它文件add后
+   + 则不会生成commit. 导致本地少了之前远程提交的版本
+   + 如果此时Push, 则会全本地commit，覆盖远程commit。导致代码丢失
+   
+ * 解决问题
+   + 如果真出现这个问题。则需要其它人reset
+   + git reset （一个比较新的版本）
+   + git checkout -- . 回滚所有提交错的commit
+   + git push origin -f 强制推送到远程
+   > 
+   
+ * 正确流程
+   1. 
+     + 可以本地commit后
+     + 再git pull
+     + 再解决冲突， 
+     + 再将所有fetch下来的文件add
+     + 再git push 
+   2. 
+     + 可以将本地git stash 
+     + 再git pull。不会有冲突
+     + 再git stash pop
+     + 可能会有冲突
+     + 解决冲突（肯定是自己与别人冲突，不会出现1情况里自己未修改的文件）
+     + 再git add
+     + 再git push
+     
+
+     
+   

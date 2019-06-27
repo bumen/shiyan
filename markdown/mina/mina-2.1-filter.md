@@ -32,14 +32,14 @@
  
  * fireSessionCreated
    + 从head执行
-   + 在processor 处理绑定selector后。session绑定到selector后执行
+   + 在processor run的时候 处理绑定selector后。session绑定到selector后执行
  * fireSessionOpened
    + 从head执行
-   + 在processor 处理绑定selector后。session绑定到selector后执行
+   + 在processor run的时候 处理绑定selector后。session绑定到selector后执行
    
  * fireSessionClosed
    + 从head执行
-   + 在processor removeSession时，触发
+   + 在processor run的时候 removeSession时，触发
    
  * fireSessionIdle
    + 从head执行
@@ -47,11 +47,11 @@
    
  * fireMessageReceived
    + 从head执行
-   + 在processor read到字符后，触发
+   + 在processor run的时候 read到字符后，触发
  
  * fireMessageSent
    + 从head执行
-   + 在processor 发送一个消息后，触发
+   + 在processor run的时候 发送一个消息后，触发
  
  * fireExceptionCaught
    + 从head执行
@@ -59,7 +59,7 @@
  
  * fireInputClosed
    + 从head执行
-   + 在processor 处理读时，读到-1触发
+   + 在processor run的时候 处理读时，读到-1触发
  
  * fireFilterWrite
    + 从tail执行
