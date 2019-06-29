@@ -74,6 +74,28 @@ mergetool.sourcetree.trustexitcode=true
    + HEAD~2，回上两个版本
    + 则回退到上一个版本
    
+### revert
+ * 它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的
+ 
+ * revert 常规 commit (git commit生成的commit)
+   + 使用 git revert <commit id> 即可，git 会生成一个新的 commit，将指定的 commit 内容从当前分支上撤除。
+   
+ 
+ * revert merge commit
+   + 这时需要添加 -m 选项以代表这次 revert 的是一个 merge commit
+   + 因为merge的commit是由两个commit合并得到的，所以revert时需要指定要恢复到哪个commit
+      - Merge: 856ad95e3 e631ad02e
+      - 1 表示856ad95e3
+      - 2 表示e631ad02e
+   + 如果要回复1， 丢掉2
+      - git revert -m 1 856ad95e3
+      
+ * 注意
+   + 使用revert HEAD是撤销最近的一次提交。如果执行了一次revert后版本为G, 如果再revert即G1, 则表示G1 revert G
+   相当于没有改变
+   + 如果revert的不是最近一次提交，那么一定有代码冲突。需要你合并代码。只需要把当前代码全部去掉。保留之前版本即可。
+ 
+   
 ### 分支
  * git branch -vv
    + 查看本地分支与远程分支关联
@@ -114,6 +136,8 @@ mergetool.sourcetree.trustexitcode=true
 ### Log
  * git log --graph --name-status --pretty=oneline --abbrev-commit
  
+ * git reflog
+ 
 ### diff
  * git diff 
    + 比较工作区与Index区差异
@@ -139,6 +163,28 @@ mergetool.sourcetree.trustexitcode=true
  
 ### commit 
  * git commit -- amend
+   + 修改当前提交的注释
+   
+ * commit有两种
+   + 一种是git commit生成的
+   ``` 
+        commit 856ad95e37bbb8a327f6909168e4c1dfc749b893
+        Author: zyq <zyq@qq.com>
+        Date:   Thu Jun 27 18:08:36 2019 +0800
+        
+            优化
+
+   ```
+   + 一种是git merge后，自动生成的commit
+   ``` 
+        Merge: 856ad95e3 e631ad02e
+        Author: zyq <zyq@qq.com>
+        Date:   Thu Jun 27 18:55:34 2019 +0800
+        
+            Merge branch 'master' of gitlab.xx-inc.com:sv/server/sr
+
+   ```
+   
  
 ### stash 
  * git stash 
@@ -211,6 +257,29 @@ mergetool.sourcetree.trustexitcode=true
      + 解决冲突（肯定是自己与别人冲突，不会出现1情况里自己未修改的文件）
      + 再git add
      + 再git push
+     
+### reset注意（远程仓库版本回退方法）
+   + 两个人本地都与远程同步到最新commit-10
+   + 如果其中一个人reset了一个之前的commit5(即回滚了)
+   + 然后git push origin -f 强制推送到远程
+   + 然后第2个人执行git pull 拉取远程最新commit(引时已经是一个回滚的版本)
+   + 此时第2个人的本地也会回滚到commit5
+   + 然后第2个人的本地会多出commit5到commit10之间未推送到远程的commit
+   + IDEA会提示有5个commit需要push
+      - 这5个commit是之前远程上最新的，但可能是有问题的commit
+   + 如果第2个人没有注意，继续直接push, 则右将commit10推送到了远程。导致远程又有了commit5-commit10之间错误版本的数据
+   + 第2个正确操作
+     - 要不就是本地在之前没有拉取过commit5到commit10之间的版本（即本地版本是commit5之前版本）。则现在直接git pull后就是正确的commit5版本
+     - 要不就需要git reset HEAD, 将这几个commit还原
+     - 然后发现错误的修改数据。需要自己用commit5版本上最新的文件覆盖即可
+     
+   + 还需要注意的问题（不会冲突）
+     - 如果commit5 有一个版本文件， commit6有一个版本文件（但是错误数据文件，所以回滚到5）
+     - 也被推送到了远程。第2个人也拉取到了本地。
+     - 因为第一个人发现commit6文件有问题，所以reset到5。又推送到远程。通知第2个人之前版本有问题，需要重新拉取远程最新
+     - 第2个人拉取远程最新commit5中的文件，因为是reset所以拉取后不会产生冲突。
+     - 此时commit6 相当于你自己在本地提交了一个commit(因为原头这个commit6也之前从远程拉取的，可能不是自己提交的东西)
+     
      
      
      
