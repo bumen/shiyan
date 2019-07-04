@@ -89,7 +89,7 @@
  * 可变长度的泛型数组，通过@SafeVarargs 消除警告
    + void say(List<String>... args)
    
-### 类型系统
+### 类型系统(泛型)
  * 类型系统描述不同类型之间的转换关系
  * 两个维度
    + 一个是泛型类型，二个是参数化类型
@@ -104,6 +104,9 @@
    + 有上界，则判断两个上界是否存在父子关系
      -  \* extends A, * extends B , A extends B. 则 * extends B 是 * extends A 的父
    + 有下界，则判断两个下界是否存在父子关系
+     - 这个与上界正好相反
+     - ? super A, ? superB, A extends B. 则 ? superB 是 ? super A的子
+     - List<? super A> listA, List<? super B> listB. 则 listA = listB
    + 多次使用通配符时，使用从最内层类型开始判断比较
      - List<? extends List<Integer>> List<? extends List<? extends Number>>
      - Integer 是 ? extends Number 是子类型，则List<Integer> 是 List<? extends Number>子类型
@@ -114,6 +117,19 @@
      - ArrayList<Integer> 是 Collection<Integer> 是子类
      - Collection<Integer> 是 Collection<? extends Number> 子类
      - 所以ArrayList<Integer> 是Collection<? extends Number> 子类
+     
+ * super 可以放，不能取
+   + ? super A. 只能放任何继承A的对象
+   + 如：
+      - A, B, C, D类。 A extends B, C extends B, D extends A
+      - List<? super A> listA, List<? superB> listB
+      - listB.add(A), listB.add(C) 成功
+      - listA.add(A)
+      - listA = listB
+      - listA.add(D) 可以。
+      - 因为listB中有C, 但是listA不能放C. 所以super不支持取
+      
+ * extends 可以取，不能放
    
 ### 泛型类继承关系
  * 方法签名：方法名与参数

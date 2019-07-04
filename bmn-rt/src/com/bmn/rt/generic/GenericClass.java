@@ -6,16 +6,16 @@ import com.bmn.rt.beans.TestC;
 import com.bmn.rt.beans.TestMC;
 import com.bmn.rt.generic.bean.ABean;
 import com.bmn.rt.generic.bean.BBean;
+import com.bmn.rt.generic.bean.CBean;
+import com.bmn.rt.generic.bean.DBean;
 import com.bmn.rt.generic.pti.APti;
 import com.bmn.rt.generic.pti.APtiAbstract;
+import com.bmn.rt.generic.pti.Apti1Abstract;
 import com.bmn.rt.generic.pti.CommonPti;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.List;
 
 public class GenericClass {
@@ -190,8 +190,33 @@ public class GenericClass {
         List<? super BBean> bBeans = null;
 
 
+        List<? super Apti1Abstract> clist = null;
+        List<? super APtiAbstract> clist2 = null;
+        List<? super CBean> cBeans = null;
+
+
         list.add(new ABean());
         list.add(new BBean());
+
+        clist2.add(new CBean());
+        cBeans = clist2;
+        clist = clist2;
+
+        // 只能放继承自己的
+        clist.add(new CBean());
+        clist.add(new Apti1Abstract());
+
+        // 只能放继承自己的，不能放父类
+        cBeans.add(new CBean());
+//        cBeans.add(new Apti1Abstract());
+
+        // 当clist 添加一个DBean时。导致cBeans取出不满足条件的类型。所以super只能放不能取
+        // clist可以赋值给cBeans，因为clist可以放任何继承Apti1Abstract的子类型。cBeans可以放任何继承CBean的子类
+        // 所以 clist可以放的类型更多，cBeans放的类型少于clist。 放到cBeans里的类型，都可以放到clist中。所以可以赋值
+        // clist时，可以放的类型太多，可能不包括CBean(如放了DBean)。所以spuer不能取
+        cBeans = clist;
+        clist.add(new DBean());
+
 
         aBeans = list;
         bBeans = list;
@@ -204,6 +229,16 @@ public class GenericClass {
         CommonPti a = (CommonPti) aBeans.get(0);
         // System.out.println(m(12d, 2d));
     }
+
+    private static <T>
+    int iteratorBinarySearch(List<? extends Comparable<? super T>> list, T key) {
+        return 0;
+    }
+
+    public static <T extends Object & Comparable<? super T>> T min(Collection<? extends T> coll) {
+        return null;
+    }
+
 
     public static <T> void write(List<? super T> list, T r) {
         list.add(r);
