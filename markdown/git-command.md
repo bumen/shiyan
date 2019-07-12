@@ -132,6 +132,8 @@ mergetool.sourcetree.trustexitcode=true
    + 删除远程仓库的分支
  * git branch -dr [remote/branch]
    + 删除本地记录的远程分支
+ * git branch -m old new
+   + 重命名
    
 ### Log
  * git log --graph --name-status --pretty=oneline --abbrev-commit

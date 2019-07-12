@@ -10,7 +10,8 @@
       - 如果不传，则使用url, path属性
    + catch_response 默认false
       - 当catch_response=true时，会返回一个正常response代理对象
-      - 目的：调用方再拿到response后，可以自已控制记录这次请求成功还是失败
+      - 目的：调用方再拿到response后，可以自已控制记录这次请求成功还是失败（需要手动记录）
+      - 默认自动触发数据记录
       
  * request_meta
    + 从几个维度记录了一个请求过程中的信息
