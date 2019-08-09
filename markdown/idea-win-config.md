@@ -122,3 +122,26 @@
 ### Other Settings
 
 ### Experimental
+
+
+### 问题
+
+#### java文件过大导致不能编译
+ * 场景：
+   + 更新代码后，突然发现代码中出现很多红色错误提示。提示找不到类引用
+   + 此时文件图标也变成了显示java文件图标J. 正常图标为^C
+   + 但是查看发现被引用的类，编译都很正常
+
+ * 查看被引用的类，打开发现idea提示
+   + The File size (2.58 MB) exceeds configured limit (2.56 MB). Code insight features are not available.
+
+ * 解决
+   + 关闭idea
+   + 修改idea.properties
+    ```
+    # idea.max.intellisense.filesize=2500
+    idea.max.intellisense.filesize=5000
+    ```
+
+    
+
