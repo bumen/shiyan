@@ -203,6 +203,14 @@ mergetool.sourcetree.trustexitcode=true
  * git stash pop --index [id]
    + 恢复指定id
    
+### git tag
+ * git tag -a tag_name -m "common"
+ * git push origin tag_name 
+ * git tag -d tag_name
+   + 删除本地tag
+ * git push origin :refs/tags/tag_name
+   + 删除远程tag
+   
 ### 忽略已经跟踪的文件更新
  * 说明：
    + 这个命令来将已经track的文件标记一下, 使其不出现在更新列表中(git status不会列出标记过的文件)
