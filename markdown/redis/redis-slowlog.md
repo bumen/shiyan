@@ -15,6 +15,23 @@
    + config set slowlog-max-len 5 
       - 最大保存5条
       
+ * 查看慢查询配置
+    + config get slowlog-log-slower-than
+       - 记录命令耗时大于等于多少微秒的命令
+    + config get slowlog-max-len
+       - 保存多少条
+       - 如果在达存储上限，则先删除最旧的，再添加新记录
+    
+ * 命令
+    + slowlog get 
+       - 获取所有慢查询
+    + slowlog get [number]
+       - 获取多少条
+    + slowlog len 
+       - 获取已经记录了多少条慢查询
+    + slowlog reset
+       - 重置慢查询记录
+      
 ### 查看
   * 命令
    + slowlog get 获取所有

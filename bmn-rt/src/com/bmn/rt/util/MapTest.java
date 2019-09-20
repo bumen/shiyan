@@ -1,15 +1,90 @@
 package com.bmn.rt.util;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.WeakHashMap;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Administrator on 2017/9/29.
  */
 public class MapTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+//        threads();
+        putNull();
+    }
+
+    private static void putNull() {
+        Map<Integer, Integer> data = new HashMap<>(10);
+
+        Integer v = null;
+        data.put(1, 3 + v);
+    }
+
+    private static void threads() throws InterruptedException {
+
+        Map<Integer, Integer> data = new HashMap<>(10);
+
+        CountDownLatch latch = new CountDownLatch(20);
+
+        CountDownLatch latch1 = new CountDownLatch(1);
+
+        for (int i = 0; i < 11; i++) {
+            int idx = i;
+            Thread t =  new Thread(()->{
+                latch.countDown();
+
+                try {
+                    latch1.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                for (int j = 0; j < 50; j++) {
+                    data.put(idx, idx);
+                }
+
+            });
+            t.start();
+
+            Thread consumer = new Thread(() -> {
+                latch.countDown();
+
+                try {
+                    latch1.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                for (int j = 0; j < 12; j++) {
+//                    for (Integer x : data.keySet()) {
+//                        System.out.println(x);
+//                    }
+                    data.clear();
+//                    System.out.println(x);
+                }
+            });
+            consumer.start();
+        }
+
+        latch.await();
+
+        // 同时执行
+        latch1.countDown();
 
 
+        Thread.sleep(5000);
+
+        System.out.println(data.size());
+    }
+
+
+    private static void basic() {
         Hashtable<Integer, Integer> table = new Hashtable<>(2);
         //table.put(3, null);
         table.put(1, 1);
@@ -60,7 +135,6 @@ public class MapTest {
         System.out.println("hash " + hash + " index : " + index + " sp " + sp);
 
         WeakHashMap<Integer, Integer> weekHashMap = new WeakHashMap<>();
-
     }
 
     private static int mapHash(String key) {

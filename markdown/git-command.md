@@ -134,11 +134,68 @@ mergetool.sourcetree.trustexitcode=true
    + 删除本地记录的远程分支
  * git branch -m old new
    + 重命名
+ * git reflog show --date=iso [branch-name]
+   + 查看分支创建时间
    
 ### Log
  * git log --graph --name-status --pretty=oneline --abbrev-commit
  
  * git reflog
+  
+ * git log  -p -2 --date=iso -- demo-pig/src/main/java/com/bmn/test/Test.java
+   + 查看某路径最近2次修改
+   ``` 
+    /e/project/bmn/haitang (master)
+    $ git log  -p -2 --date=iso -- demo-pig/src/main/java/com/bmn/test/Test.java
+  
+   ```
+   
+ * git log --pretty=format:"%h - %an, %ar : %s"
+   + 占位符
+   ``` 
+    %H	提交对象（commit）的完整哈希字串
+    %h	提交对象的简短哈希字串
+    %T	树对象（tree）的完整哈希字串
+    %t	树对象的简短哈希字串
+    %P	父对象（parent）的完整哈希字串
+    %p	父对象的简短哈希字串
+    %an	作者（author）的名字
+    %ae	作者的电子邮件地址
+    %ad	作者修订日期（可以用 -date= 选项定制格式）
+    %ar	作者修订日期，按多久以前的方式显示
+    %cn	提交者(committer)的名字
+    %ce	提交者的电子邮件地址
+    %cd	提交日期
+    %cr	提交日期，按多久以前的方式显示
+    %s	提交说明
+   ```
+ * git log 参数
+   ``` 
+    -p	按补丁格式显示每个更新之间的差异。
+    --word-diff	按 word diff 格式显示差异。
+    --stat	显示每次更新的文件修改统计信息。
+    --shortstat	只显示 --stat 中最后的行数修改添加移除统计。
+    --name-only	仅在提交信息后显示已修改的文件清单。
+    --name-status	显示新增、修改、删除的文件清单。
+    --abbrev-commit	仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。
+    --relative-date	使用较短的相对时间显示（比如，“2 weeks ago”）。
+    --graph	显示 ASCII 图形表示的分支合并历史。
+    --pretty	使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。
+    --oneline	--pretty=oneline --abbrev-commit 的简化用法。
+    
+    -(n)	仅显示最近的 n 条提交
+    --since, --after	仅显示指定时间之后的提交。
+    --until, --before	仅显示指定时间之前的提交。
+    --author	仅显示指定作者相关的提交。
+    --committer	仅显示指定提交者相关的提交。
+    
+   ```
+   + 还可以给出若干搜索条件，列出符合的提交。用 --author 选项显示指定作者的提交，用 --grep 选项搜索提交说明中的关键字。
+     （请注意，如果要得到同时满足这两个选项搜索条件的提交，就必须用 --all-match 选项。否则，满足任意一个条件的提交都会被匹配出来）
+   + 另一个真正实用的git log选项是路径(path)，如果只关心某些文件或者目录的历史提交，可以在 git log 选项的最后指定它们的路径。
+   因为是放在最后位置上的选项，所以用两个短划线（--）隔开之前的选项和后面限定的路径名。
+    
+   
  
 ### diff
  * git diff 
