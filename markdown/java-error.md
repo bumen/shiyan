@@ -80,3 +80,75 @@
    + 确保core dump已打开, cat /proc/pid/limits
    + dmesg | grep -i kill
    + 
+   
+### 多线程问题
+ * A线程
+ ``` 
+    // 共享缓存
+    cache = new ConcurrentHashMap<>();
+    condition = new ConcurrentHashMap<>();
+    
+    // 2. 执行
+    func success(id): 
+        condition[id] == true;
+    
+    
+    func getObject(id):
+        // 3. 执行
+        Object A = cache.get(id);
+        if(A == null) {
+            Object B = db.get(id);
+            
+            // 6. 执行
+            synchronized(cache) {
+                if(!cache.containsKey(id)) {
+                    cache.put(id, B);
+                }
+            }
+            
+            A = B;
+        }
+    
+    return A;
+ ```
+ * B线程
+ ``` 
+   func clear(id):
+        // 1. 执行， cpu被让出
+        if condition[id] == false:
+            // 4. 执行。 导致A被删除
+            Object A = cache.remove(id);
+ ```
+ * 场景
+   + 玩家A线程登录后的value1, 可能被B线程删除掉。因为B线程正在执行remove操作时，A线程登录的
+   + 这种场景出现肯定是A线程的 if(o == null) 不满足，返回了A
+   
+ * 解决
+   + 给id加版本
+   + 整体接口加锁
+   + 在3步对cache加锁，同时在1，4步对cache加锁
+   + Object A 上设置一个状态，ok, removing, removed。原子更新
+   + 在4执行完成后，再添加一次
+   ``` 
+        if condition == false:
+            Object A = cache.remove(id);
+            
+            // 7. 执行。 会导致一个问题就是，如果A线程修改了3步拿到的A时, 又一次调用getObject(id)拿到了B。
+            // 则7步的A不会被重新存，导致数据丢失
+            synchronized(cache) {
+                if(!cache.containsKey(id)) {
+                    cache.put(id, A);
+                }
+            }
+   ```
+   
+### fastjson序列化问题
+ * 使用set方法参数实现序列化
+ * 如果自己写的数据结构，再反序列化时，第三方框架只有默认jdk数据结构所以反序列化时可能会找不到自己定义的数据结构类型
+   + List<Integer> list = new LinkedList<>()
+   + setList(List<Integer> list). 默认在反序列化后使用的ArrayList<>(). 
+ * 注意
+   + 要实现默认构造函数
+   + 注意get方法使用。默认将所有get方法对应属性序列化
+   
+   

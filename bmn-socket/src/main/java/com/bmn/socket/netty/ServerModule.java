@@ -1,13 +1,14 @@
 package com.bmn.socket.netty;
 
+import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpServerCodec;
@@ -42,5 +43,22 @@ public class ServerModule {
 
         ChannelFuture f = b.bind(8888).sync();
 //        f.channel().closeFuture().addListener(new CloseChannelFutureListener(tcpPort, workerGroup));
+    }
+
+    public void client() {
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+
+        Bootstrap bootstrap = new Bootstrap();
+        Bootstrap handler = bootstrap.group(workerGroup).channel(NioSocketChannel.class)
+            .handler(new ChannelInitializer<SocketChannel>() {
+
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception {
+
+                }
+            });
+
+        bootstrap.connect("", 0);
+
     }
 }

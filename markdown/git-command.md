@@ -141,6 +141,9 @@ mergetool.sourcetree.trustexitcode=true
  * git log --graph --name-status --pretty=oneline --abbrev-commit
  
  * git reflog
+ 
+ * git show 21ad17f --name-status
+   + 查看某次提交的文件
   
  * git log  -p -2 --date=iso -- demo-pig/src/main/java/com/bmn/test/Test.java
    + 查看某路径最近2次修改
