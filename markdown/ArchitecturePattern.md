@@ -23,7 +23,7 @@
    + db层, 数据以行为单位
    + cache层，数据以kv的形式
    + service层，数据以Object对象形式
-   + web-server层, http有好的json对象
+   + web-server层, http友好的json对象
    + client层
    
 #### 什么时候进行DAO层抽象
@@ -48,7 +48,7 @@
  * 随着读并发的越来越大，会增加缓存
  
 #### 什么时候要进行通用业务层服务化
- * 当有多个数据服务层是，多个web-server访问多个数据服务层。会出现每个web-server的复杂性
+ * 当有多个数据服务层时，多个web-server访问多个数据服务层。会出现每个web-server的复杂性
  * 通过抽象通用业务服务层，通过服务层访问多个数据服务层。屏蔽多全web-server访问复杂性
  * 好处：
    + 保有通用业务service处写一次，没有代码拷贝

@@ -30,7 +30,7 @@ http{
  * worker_processes 2 //指定nginx开启的子进程数
    + 每个进程平均耗费10m-12m内存。
    + 根据经验一般一个进程就足够了，如果是多核，则指定与cpu数量一致
-   + 如果写2，则是2个子进程，一个3个进程
+   + 如果写2，则是2个子进程，一共个3个进程
  * error_log /data/log/err.log debug
    + 全局错误日志，debug, info, notice, warn, error, crit
  * pid

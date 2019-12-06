@@ -55,13 +55,16 @@
  * 看jvm-gc.md
 
 #### 对象死亡过程
+ * https://www.iteye.com/blog/bijian1013-2288223
+ 
  * 通过根搜索，要真正宣告一个对象死亡，**至少**要经历两次标记过程
    + 第一次标记：对没有引用的对象标记并且进行一次筛选。
    + 筛选：看finalize
-   + 第二次标记，如果对象没有被重新引用，则它就真的离死亡不远了。
+   + 第二次标记，如果对象没有被重新引用，则它就真的离死亡不远了。(可以在finalize方法中再重生)
    + 后续可能不同收集器可能还用有不同的处理过程
    
 #### finalize
+ * finalize方法通常是用于清理一些非本地方法(native)，和一些对象安全释放校验的操作
  * Finalizer线程：是daemon线程，由虚拟机创建并启动处理要执行的finalize方法的对象
    + 通过调用ReferenceQueue的remove方法获取要执行finalize方法的对象
    + 当执行finalize方法时，虚拟机不承诺会等待它运行结束。
@@ -73,4 +76,8 @@
  * 如果对象没有实现finalize方法，或finalize方法已经被虚拟机调用过，则是没有必要执行
  * 如果对象判断有必要执行finalize方法，那么把对象放到ReferenceQueue.
  * 此时由Finalizer线程执行
+ * 特点
+   + 没有重写finalize方法，则直接回收
+   + 重写finalize方法，垃圾回收时，一个对象的finalize方法一生只会被执行一次，即使重生过。因为Finalizer线程执行完会标记对象为finalized状态
+   + 手动调用finalize方法，不会影响对象标记状态。
  

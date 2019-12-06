@@ -1,6 +1,54 @@
 ## 面试题
 
+### JVM
+ * 垃圾回收
+   + 回收算法
+   + 收集器
+ * jmm
+ 
+
 ### java基础
+ * 维度
+   + 基础
+   + 多线程
+   + 网络
+   + 数据结构
+   + 启动到停止
+   + 其它细节
+   
+ * finalize方法什么时候被调用
+ * shutdown hook 什么时候触发
+ * Collections.sort() 实现
+ * equals 与 hash code 什么时候重写
+ * HashMap.get()方法实现， List.get()方法实现
+ * 泛型
+ * int 缓存
+ * 锁实现
+ 
+### 框架
+ * netty
+   + pipeline实现。（了解其使用）
+   + epoll bug 解决。（是否看过源码）
+   + IdleStateHandler实现。（实战）
+   
+ * db
+ 
+ * 业务
+   + 日志
+   + 调度
+   + 配置文件
+   + 充值
+   + 道具资源
+ 
+ * 缓存
+ 
+ * rpc
+ 
+   
+### 性能
+ 
+
+### 设计模式
 
 #### java
 

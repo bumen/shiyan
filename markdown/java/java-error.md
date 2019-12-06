@@ -151,4 +151,20 @@
    + 要实现默认构造函数
    + 注意get方法使用。默认将所有get方法对应属性序列化
    
+### sofa rpc 世界boss业务卡
+ * 一个backend 会有多台battle, 通过rpc调用
+ * backend 每次随机负载一台battle。多个backend可能同时会路由到同一台battle上
+ * 世界boss业务
+   + 一个线程接收玩家请求战斗，放到队列排除执行
+   + 问题
+      - 当前面一个玩家卡时，后导致后面所有玩家返回慢
+      - 卡的问题时。多个backend同时路由到同一台battle上，导致战斗时间长。
+      > 虽然可能其它battle执行很快，但是一但一台battle卡了，导致backend返回慢，导致后面的人排队处理时间长
+      
+ * 解决方案
+   1. backend 如果能判断出哪个battle繁忙就好了，就不要路由到那台（现在没有实现）
+   2. 玩家多某台backend固定使用几台battle, 不与其它backend共享battle (需要自定义路由)
+   3. 加快battle 响应，避免执行时间长的业务
+   4. 超时重试，backend设置短的超时时间，一但超时则快速重新路由到另一台不繁忙的battle
+   
    
