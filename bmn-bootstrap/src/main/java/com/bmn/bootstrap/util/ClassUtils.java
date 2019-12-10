@@ -43,7 +43,7 @@ public abstract class ClassUtils {
             ReflectionUtils.makeAccessible(ctor);
             return ctor.newInstance(args);
         } catch (InstantiationException ex) {
-            throw new BeanInstantiationException("Is it an abstract class?", ex);
+            throw new BeanInstantiationException("Is it an abs class?", ex);
         } catch (IllegalAccessException ex) {
             throw new BeanInstantiationException("Is the constructor accessible?", ex);
         } catch (IllegalArgumentException ex) {

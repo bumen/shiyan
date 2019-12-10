@@ -36,7 +36,7 @@ define(
             var pwdValue = $.trim(this.elelist.pwdEle.val());
             var f = false;//"undefined" != typeof pgeditor && pgeditor.pwdResult();
             var g = false;//"undefined" != typeof pgeditor && pgeditor.checkInstall();
-            var h = $(".safe-chk").prop("checked");
+            var h = $(".safity-chk").prop("checked");
             var i = $("#o-authcode").is(":visible");
             var j = $.trim($("#authcode").val());
             this.clear();

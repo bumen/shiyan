@@ -1,4 +1,4 @@
-/* user-passport/1.0.0 login.safe.js md5:d886da354111a3710d6c913e37c3ce9a */
+/* user-passport/1.0.0 login.safity.js md5:d886da354111a3710d6c913e37c3ce9a */
 define("login/login.safe.js",
     ["ui/dialog.js"],
 

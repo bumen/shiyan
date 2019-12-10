@@ -6,7 +6,7 @@ define(
     [
         "util/util.reg.js",
         "login/login.status.js",
-        "login/login.safe.js",
+        "login/login.safity.js",
         "ui/tips.js",
         "login/login.pubSub.js"
     ],
@@ -14,7 +14,7 @@ define(
     function(require) {
     var reg = require("util/util.reg.js");
     var status = require("login/login.status.js");
-    var safe = require("login/login.safe.js");
+    var safe = require("login/login.safity.js");
     require("ui/tips.js");
     var pubSub = require("login/login.pubSub.js");
     //大小写提示

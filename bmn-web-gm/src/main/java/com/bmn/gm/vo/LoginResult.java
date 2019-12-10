@@ -6,7 +6,7 @@ package com.bmn.gm.vo;
 public class LoginResult {
     private String success;
     private String username;
-    private String pwd; //账户名与密码不匹配，请重新输入, //密码错误，您还可以尝试2次。<a class="flk13" target="_blank" href="//safe.jd.com/findPwd/index.action">点此找回密码</a>
+    private String pwd; //账户名与密码不匹配，请重新输入, //密码错误，您还可以尝试2次。<a class="flk13" target="_blank" href="//safity.jd.com/findPwd/index.action">点此找回密码</a>
     private String emptyAuthcode;
     private boolean verifycode;
 

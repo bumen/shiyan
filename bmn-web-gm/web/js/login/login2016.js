@@ -350,11 +350,11 @@ var Util = {
                             parentRef = document.referrer;
                         }catch(e){
                         }
-                        window.parent.location = protocol + "//safe.jd.com/dangerousVerify/index.action?username=" + obj.venture + "&ReturnUrl=" + encodeURI(parentRef) + "&p=" +obj.p+ "&t=" + new Date().getTime();
+                        window.parent.location = protocol + "//safity.jd.com/dangerousVerify/index.action?username=" + obj.venture + "&ReturnUrl=" + encodeURI(parentRef) + "&p=" +obj.p+ "&t=" + new Date().getTime();
                         return;
                     }
                     if (obj.resetpwd) {
-                        window.parent.location = protocol + "//safe.jd.com/resetPwd/reset.action?username=" + obj.resetpwd;
+                        window.parent.location = protocol + "//safity.jd.com/resetPwd/reset.action?username=" + obj.resetpwd;
                         return;
                     }
                     if (obj.rescue) {
