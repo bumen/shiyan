@@ -5,12 +5,16 @@ package com.bmn.algorithm.impl;
  */
 public class InsertSort {
 
+
+    public static void main(String[] args) {
+        sort1();
+    }
     /**
      * 直接插入排序（其实是插入到一个有序的队列）
      * O(n^2)
      * 稳定排序
      */
-    public void sort1() {
+    public static void sort1() {
         int[] a = {3,1,5,7,2,4,9,6};
         for(int i = 1, l = a.length; i < l; i++) {
             int j = i - 1; //前一个元素
@@ -18,7 +22,13 @@ public class InsertSort {
             if (a[i] < a[j]) {
                 int x = a[i]; //当前元素
 
-                while(x < a[j]) {   //当前元素比他前面的元素都小，则一直后移
+                //[1,3,5,7,2]
+                //[1,3,5,7,7]
+                //[1,3,5,5,7]
+                //[1,3,3,5,7]
+                //[1,3,3,5,7]
+                //[1,2,3,5,7]
+                while(j >= 0 && x < a[j]) {   //当前元素比他前面的元素都小，则一直后移
                     a[j + 1] = a[j];
                     j--;
                 }

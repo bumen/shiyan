@@ -36,6 +36,9 @@ mergetool.sourcetree.trustexitcode=true
 
 ```
 
+### 查看本地提交还没有push的commit
+ * `git log master ^origin/master` 
+
 ### 把多个commit合并成一个commit
  * git rebase -i 
 

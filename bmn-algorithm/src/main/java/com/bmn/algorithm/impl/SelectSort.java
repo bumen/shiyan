@@ -35,11 +35,11 @@ public class SelectSort {
      * 二元选择排序，每次比较出一个最大与最小
      * 只需要n/2次比较
      */
-    public void sort2() {
-        int[] a = {3,1,5,7,2,4,9,6};
-        int n = a.length /2;
+    public static void sort2() {
+        int[] a = {3,1,5,7,2,4,9,6,8};
+        int n = a.length;
         int min = 0, max = 0;
-        for(int i = 1; i < n / 2; i++) {
+        for(int i = 0; i < n / 2; i++) {
             min = i; max = i;
             for(int j = i + 1; j < n - i ; j++) {
                 if (a[j] > a[max]) {
@@ -52,17 +52,25 @@ public class SelectSort {
             }
 
             if (min != i) {
-                int t = a[i - 1];
-                a[i - 1] = a[min];
+                int t = a[i];
+                a[i] = a[min];
                 a[min] = t;
             }
 
             if (max != i) {
-                int t = a[n-i ];
-                a[n-i] = a[max];
+                int t = a[n-i-1 ];
+                a[n-i-1] = a[max];
                 a[max] = t;
             }
         }
+
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
+        }
+    }
+
+    public static void main(String[] args) {
+        sort2();
     }
 
     /**
