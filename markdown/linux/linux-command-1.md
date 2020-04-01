@@ -17,6 +17,7 @@
    
  * 格式化输出
    + awk '{printf "\"%s\",\n", $1}' asr.txt
+   + awk '{printf "{\"u\":\"%s\", \"t\":%s, \"c\":%s},\r\n", $1, $2, $3}' mail_bug_data.log > mail_data.log
  * 倒数第几列
    + awk '{print $(NF-1)}'
 
