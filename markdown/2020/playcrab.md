@@ -54,3 +54,21 @@
    ```
  * 幽灵代码删库跑路引发的分支模式思考
    + https://mp.weixin.qq.com/s/OWOeKUu1UGmZH_jGhlqeGg98
+   
+ * 设计模式
+   + https://refactoringguru.cn/design-patterns
+   
+ * 每当我想放弃 Scala，我就写写 Python 和 Java
+   + https://mp.weixin.qq.com/s/DfLd5kr3DZo87mPArRqiFg
+   
+ * 20 多年历史的 Java 正在焕发第二春
+   + https://mp.weixin.qq.com/s/EMLXcm-565Cc4jMo329i4Q
+   
+ * 消息传递与actor模型
+   + https://fuzhe1989.github.io/2018/05/17/message-passing-and-the-actor-model/
+   
+ * 游戏服务器架构
+   + https://patents.google.com/patent/CN110855708A/
+   
+ * 三国志战略版服务器卡顿问题
+   + https://blog.codingnow.com/2019/10/sanguo.html
