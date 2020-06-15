@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>3.2.15.RELEASE</spring.version>
+        <spring.version>5.2.7.RELEASE</spring.version>
         <aspectj.version>1.8.10</aspectj.version>
         <jetty.version>8.1.16.v20140903</jetty.version>
     </properties>
