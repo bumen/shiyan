@@ -55,3 +55,16 @@ doc/*.txt           # 忽略如 doc/notes.txt, 但是不忽略如 doc/server/arc
     + 忽略根目录下的 /upload/ 目录的全部内容；
  * configuration/**/*-baw.properties
     + 忽略configuration目录下不同子目录（多级）下的baw.properties结尾的文件
+
+
+### for 
+ *  they check their local list for registered members
+ * When a new member is registered for a topic
+ * Hazelcast Topic uses the MessageListener interface to listen for events 
+ * Hazelcast provides a distribution mechanism for publishing messages
+ * it is actually registering for messages published by any member in the cluster
+ 
+### of
+ * returns the total number of published and received messages 
+ * since the start of this member,
+ * Each cluster member has a list of all registrations in the cluster

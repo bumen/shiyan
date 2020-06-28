@@ -7,8 +7,6 @@ package com.bmn.rt.lang.primitive;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * 
@@ -64,7 +62,7 @@ public  class BmnPrimitive {
     }
 
     /**
-     * 运算符优先级
+     * %X{MQTT-TraceId},%X{MQTT-UserId}优先级
      * <p>
      * 1. <code> ++ -- </code>, int
      * <p>

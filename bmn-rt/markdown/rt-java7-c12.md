@@ -105,7 +105,7 @@
      -  \* extends A, * extends B , A extends B. 则 * extends B 是 * extends A 的父
    + 有下界，则判断两个下界是否存在父子关系
      - 这个与上界正好相反
-     - ? super A, ? superB, A extends B. 则 ? superB 是 ? super A的子
+     - ? super A, ? super B, A extends B. 则 ? super B 是 ? super A的子
      - List<? super A> listA, List<? super B> listB. 则 listA = listB
    + 多次使用通配符时，使用从最内层类型开始判断比较
      - List<? extends List<Integer>> List<? extends List<? extends Number>>
@@ -122,7 +122,7 @@
    + ? super A. 只能放任何继承A的对象
    + 如：
       - A, B, C, D类。 A extends B, C extends B, D extends A
-      - List<? super A> listA, List<? superB> listB
+      - List<? super A> listA, List<? super B> listB
       - listB.add(A), listB.add(C) 成功
       - listA.add(A)
       - listA = listB

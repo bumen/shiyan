@@ -1,5 +1,11 @@
 package com.bmn.rt.generic;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.Collection;
+import java.util.List;
+
 import com.bmn.rt.abs.TestA;
 import com.bmn.rt.abs.TestI;
 import com.bmn.rt.beans.TestC;
@@ -12,11 +18,6 @@ import com.bmn.rt.generic.pti.APti;
 import com.bmn.rt.generic.pti.APtiAbstract;
 import com.bmn.rt.generic.pti.Apti1Abstract;
 import com.bmn.rt.generic.pti.CommonPti;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.Collection;
-import java.util.List;
 
 public class GenericClass {
 
@@ -190,8 +191,8 @@ public class GenericClass {
         List<? super BBean> bBeans = null;
 
 
-        List<? super Apti1Abstract> clist = null;
-        List<? super APtiAbstract> clist2 = null;
+        List<? super APtiAbstract> clist1 = null;
+        List<? super Apti1Abstract> clist2 = null;
         List<? super CBean> cBeans = null;
 
 
@@ -199,12 +200,13 @@ public class GenericClass {
         list.add(new BBean());
 
         clist2.add(new CBean());
+        cBeans = clist1;
+        clist2 = clist1;
         cBeans = clist2;
-        clist = clist2;
 
         // 只能放继承自己的
-        clist.add(new CBean());
-        clist.add(new Apti1Abstract());
+        clist2.add(new CBean());
+        clist2.add(new Apti1Abstract());
 
         // 只能放继承自己的，不能放父类
         cBeans.add(new CBean());
@@ -214,8 +216,8 @@ public class GenericClass {
         // clist可以赋值给cBeans，因为clist可以放任何继承Apti1Abstract的子类型。cBeans可以放任何继承CBean的子类
         // 所以 clist可以放的类型更多，cBeans放的类型少于clist。 放到cBeans里的类型，都可以放到clist中。所以可以赋值
         // clist时，可以放的类型太多，可能不包括CBean(如放了DBean)。所以spuer不能取
-        cBeans = clist;
-        clist.add(new DBean());
+        cBeans = clist2;
+        clist2.add(new DBean());
 
 
         aBeans = list;
