@@ -44,26 +44,29 @@
    + 复制东西太多，不适合大于数对象长时间存活的场景
    + hotspot默认比是8:1, 新生代采用复制算法，尽量多回收，如果复制太多，效率将会变低
  * 标记，整理
+   + 先标记，然后将存活对象都向一端移动，然后直接清理掉端边界外的内存
  * 分代
  
 ### 垃圾收集器
  * 垃圾回收算法是理论，垃圾收集器是实现。
  * Serial 串行收集器
    + 单线程收集器
-   + 采用复制算法
-   + 会暂停程序执行
    + 新生代与老年代 Serial Old
+   + 新生代采用复制算法，老年代采用标记整理算法
+   + 会暂停程序执行
    + DefNew：是使用-XX:+UseSerialGC（新生代，老年代都使用串行回收收集器）。
    + DefNewGeneration是default new generation 
  
  * ParNew 收集器
-   + 是Serial 多线程版本
    + 默认开启收集线程数与CPU数量相同，当CPU过多时，可以通过-XX:ParallelGCThreads参数限制垃圾收集线程数
    + 会暂停程序执行
    + 新生代收集器
    + 在单CPU环境中绝对不会有比Serial收集器更好的效果
    + 除了Serial, 只有ParNew可以与CMS收集器配合工作
    + ParNew：是使用-XX:+UseParNewGC（新生代使用并行收集器，老年代使用串行回收收集器）
+     - jdk8以后去掉了
+     - 是Serial 多线程版本
+     - 新生代复制，老年代标记整理
    + -XX:+UseConcMarkSweepGC(新生代使用并行收集器，老年代使用CMS)。
    + PS变为只用深度优先遍历。ParNew则是一直都只用广度优先顺序来遍历 
     
@@ -100,7 +103,7 @@
    + 与Parallel Scavenge 一起使用
  
  * CMS
-   + 获取最短回收停顿时间
+   + 优点: 并发收集、低停顿
    + 采用标记，清除算法
    + 过程
      - 初始标记, 会stop the world, initial mark  
@@ -109,6 +112,7 @@
      - 并发清除 concurrent sweep
    + 整个过程，最耗时的是并发标记，与并发清除
    + 缺点
+     - 产生大量空间碎片、并发阶段会降低吞吐量
      - 1. CMS对CPU资源非常敏感， 默认回收线程数(cpu数 + 3) / 4 , 当大于4个cpu时最多占用不超过25%
      - 当小于4时，就很影响用户程序
      - 2. 无法处理浮动垃圾，因为并发清除，所以不能等老年代满了再执行回收，
@@ -117,7 +121,26 @@
      - 会触发Serial Old gc 产生长时间停动
      - 3. 产生内存碎片，当分配大对象时由于没有足够连接空间而提前触发FullGc 
      - -XX:+UseCMSCompactAtFullCollection, 内存整理不能并发，所以会停顿时间变长
+       - jdk8以后去掉了
      - -XX:CMSFullGCsBeforeCompaction, 多少个不压缩的FullGc后来一个压缩
+       - jdk8以后去掉了
+   + gc日志
+   ``` 
+    2020-03-07T19:42:40.306+0800: 234500.145: [GC (CMS Initial Mark) [1 CMS-initial-mark: 9005021K(11237376K)] 9139575K(12883392K), 0.0139099 secs] [Times: user=0.07 sys=0.01, real=0.01 secs]
+    2020-03-07T19:42:40.320+0800: 234500.160: [CMS-concurrent-mark-start]
+    2020-03-07T19:42:40.759+0800: 234500.598: [CMS-concurrent-mark: 0.438/0.439 secs] [Times: user=0.94 sys=0.00, real=0.43 secs]
+    2020-03-07T19:42:40.759+0800: 234500.598: [CMS-concurrent-preclean-start]
+    2020-03-07T19:42:40.772+0800: 234500.611: [CMS-concurrent-preclean: 0.013/0.013 secs] [Times: user=0.01 sys=0.00, real=0.02 secs]
+    2020-03-07T19:42:40.772+0800: 234500.611: [CMS-concurrent-abortable-preclean-start]
+     CMS: abort preclean due to time 2020-03-07T19:42:45.880+0800: 234505.719: [CMS-concurrent-abortable-preclean: 5.007/5.108 secs] [Times: user=5.13 sys=0.00, real=5.10 secs]
+    2020-03-07T19:42:45.880+0800: 234505.720: [GC (CMS Final Remark) [YG occupancy: 226708 K (1646016 K)]2020-03-07T19:42:45.880+0800: 234505.720: [Rescan (parallel) , 0.0262083 secs]2020-03-07T19:42:45.906+0800: 234505.746: [we
+    ak refs processing, 0.0018244 secs]2020-03-07T19:42:45.908+0800: 234505.748: [class unloading, 0.1477829 secs]2020-03-07T19:42:46.056+0800: 234505.896: [scrub symbol table, 0.0101040 secs]2020-03-07T19:42:46.066+0800: 234505
+    .906: [scrub string table, 0.0014069 secs][1 CMS-remark: 9005021K(11237376K)] 9231729K(12883392K), 0.1877774 secs] [Times: user=0.37 sys=0.00, real=0.19 secs]
+    2020-03-07T19:42:46.068+0800: 234505.908: [CMS-concurrent-sweep-start]
+    2020-03-07T19:43:00.681+0800: 234520.521: [CMS-concurrent-sweep: 14.608/14.613 secs] [Times: user=15.08 sys=0.00, real=14.61 secs]
+    2020-03-07T19:43:00.682+0800: 234520.522: [CMS-concurrent-reset-start]
+    2020-03-07T19:43:00.700+0800: 234520.540: [CMS-concurrent-reset: 0.018/0.018 secs] [Times: user=0.02 sys=0.00, real=0.02 secs]
+   ```
      
  * 参数
    + -XX:PretenureSizeThreshold 令大于这个设置值的对象直接在老年代中分配

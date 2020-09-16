@@ -11,6 +11,7 @@
    + QPS：Queries Per Second（查询量/秒），
    是服务器每秒能够处理的查询次数，例如域名服务器、Mysql查询性能。
    一定需要指明是多少并发用户数下的QPS
+   >> TPS：代表写请求， QPS：代表读请求
    + RPS：Request Per Second（请求数/秒）
      RPS（Request Per Second）和QPS可以认为是一回事。
    + RT：Response Time（响应时间）：客户端发一个请求开始计时，到客户端接收到从服务器端返回的响应结果结束所经历的时间，
