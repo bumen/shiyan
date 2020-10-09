@@ -1,4 +1,6 @@
 ### im mysql 优化
+ * [mysql参数](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-configuration-properties.html)
+
  * 打开慢查询日志
    + 这个如果在配置文件中没有打开，则需要设置 global variables打开
     
