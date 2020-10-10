@@ -13,6 +13,8 @@
       - `export LANG="zh_CN.UTF-8"`
       - `export LC_ALL="zh_CN.UTF-8"`
       
+      > 如果没有权限写文件，则通过右键->属性->安全来设置User的权限
+      
    + cd ~ 
       - 进入home目录
       - 添加.bash_profile
