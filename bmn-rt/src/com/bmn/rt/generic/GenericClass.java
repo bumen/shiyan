@@ -270,6 +270,8 @@ public class GenericClass {
     public static <T> void rei(List<T> list) {
         int asdf = asdf = 20000;
 
+        list.add(3)
+
         switch(1) {
             case 1:
                 Object ix = 1110;
