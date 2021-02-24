@@ -1,8 +1,5 @@
 package com.bmn.rt.util;
 
-import sun.util.locale.BaseLocale;
-import sun.util.locale.LocaleObjectCache;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -10,20 +7,29 @@ import java.net.URLConnection;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
+
+import sun.util.locale.BaseLocale;
+import sun.util.locale.LocaleObjectCache;
 
 /**
  * Created by Administrator on 2017/10/10.
  */
 public class QvpControl extends ResourceBundle.Control {
 
+    @Override
     public List<String> getFormats(String baseName) {
         if (baseName == null) {
             throw new NullPointerException();
         }
         return FORMAT_DEFAULT;
     }
-
+    @Override
     public Locale getFallbackLocale(String baseName, Locale locale) {
         if (baseName == null) {
             throw new NullPointerException();
@@ -31,14 +37,14 @@ public class QvpControl extends ResourceBundle.Control {
         Locale defaultLocale = Locale.getDefault();
         return locale.equals(defaultLocale) ? null : defaultLocale;
     }
-
+    @Override
     public long getTimeToLive(String baseName, Locale locale) {
         if (baseName == null || locale == null) {
             throw new NullPointerException();
         }
         return 1000;
     }
-
+    @Override
     public List<Locale> getCandidateLocales(String baseName, Locale locale) {
         if (baseName == null) {
             throw new NullPointerException();
@@ -49,6 +55,7 @@ public class QvpControl extends ResourceBundle.Control {
     private static final CandidateListCache CANDIDATES_CACHE = new CandidateListCache();
 
     private static class CandidateListCache extends LocaleObjectCache<BaseLocale, List<Locale>> {
+        @Override
         protected List<Locale> createObject(BaseLocale base) {
             String language = base.getLanguage();
             String script = base.getScript();
@@ -170,7 +177,7 @@ public class QvpControl extends ResourceBundle.Control {
             return list;
         }
     }
-
+    @Override
     public ResourceBundle newBundle(String baseName, Locale locale, String format,
                                     ClassLoader loader, boolean reload)
             throws IllegalAccessException, InstantiationException, IOException {
@@ -239,6 +246,7 @@ public class QvpControl extends ResourceBundle.Control {
         }
         return bundle;
     }
+    @Override
     public String toBundleName(String baseName, Locale locale) {
         if (locale == Locale.ROOT) {
             return baseName;

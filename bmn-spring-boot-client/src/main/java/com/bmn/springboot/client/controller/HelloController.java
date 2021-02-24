@@ -1,7 +1,9 @@
 package com.bmn.springboot.client.controller;
 
-import com.bmn.springboot.client.pojo.WorldDTO;
-import io.netty.util.concurrent.CompleteFuture;
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import com.bmn.springboot.client.pojo.Message;
+import com.bmn.springboot.client.pojo.WorldDTO;
+import com.bmn.springboot.client.service.AliPictureService;
 
 @Log4j2
 @RestController
 public class HelloController {
+
+    static {
+        AliPictureService.INSTANCE.init();
+    }
 
     @RequestMapping("/hello")
     public String hello() throws ExecutionException, InterruptedException {
@@ -25,6 +32,20 @@ public class HelloController {
         CompletableFuture<String> future = this.recognizeCore(world, String.class);
         log.debug("success get world: {}", future.get());
         return "hello boot";
+    }
+
+    private static final Random random = new Random();
+
+    @RequestMapping("/image")
+    public String image() throws ExecutionException, InterruptedException {
+        Message message = new Message();
+        message.setContent("text/text.jpg");
+        message.setMessageId(random.nextInt(100000));
+        AliPictureService.INSTANCE.checkTo(message, (s)->{
+            log.debug("handle image r:{} ", s);
+        });
+
+        return "ok";
     }
 
 

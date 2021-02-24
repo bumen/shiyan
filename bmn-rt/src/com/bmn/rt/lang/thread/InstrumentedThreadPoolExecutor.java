@@ -1,7 +1,5 @@
 package com.bmn.rt.lang.thread;
 
-import sun.util.resources.cldr.ga.LocaleNames_ga;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;

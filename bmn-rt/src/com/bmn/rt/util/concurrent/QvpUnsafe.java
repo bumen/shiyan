@@ -1,9 +1,7 @@
 package com.bmn.rt.util.concurrent;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.security.ProtectionDomain;
-import sun.reflect.CallerSensitive;
 import sun.reflect.Reflection;
 
 /**
